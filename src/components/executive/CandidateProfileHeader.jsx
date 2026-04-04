@@ -1,7 +1,7 @@
 import React from 'react';
 import './CandidateProfileHeader.css';
 
-const CandidateProfileHeader = ({ candidate, onDownload, isDownloading }) => {
+const CandidateProfileHeader = ({ candidate }) => {
   if (!candidate) return null;
 
   return (
@@ -48,18 +48,6 @@ const CandidateProfileHeader = ({ candidate, onDownload, isDownloading }) => {
         </div>
 
         <div className="profile-actions-wrapper">
-          <div className="profile-actions">
-            <button 
-              className="btn-glass" 
-              onClick={onDownload}
-              disabled={isDownloading}
-              style={{ opacity: isDownloading ? 0.7 : 1, cursor: isDownloading ? 'wait' : 'pointer' }}
-            >
-              <span className="btn-icon">{isDownloading ? '⏳' : '📥'}</span>
-              {isDownloading ? 'Generating PDF...' : 'Download CV'}
-            </button>
-          </div>
-
           <div className="profile-socials">
             <a href="#linkedin" className="social-link" title="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor">

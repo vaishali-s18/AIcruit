@@ -21,7 +21,26 @@ const ExecutiveCandidates = () => {
     // Simulate API loading
     setLoading(true);
     const timer = setTimeout(() => {
-      setCandidates(mockCandidates);
+      
+      // Pull live applications
+      const liveApps = JSON.parse(localStorage.getItem('liveApplications') || '[]');
+      
+      // Format them to match existing Candidates schema
+      const liveCandidates = liveApps.map(app => ({
+        id: app.id,
+        jobId: app.jobId,
+        name: app.candidateName,
+        role: app.role,
+        experience: 'New Applicant', // Not strictly tracked in form yet
+        skills: app.skills,
+        matchScore: app.matchScore,
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(app.candidateName)}&background=0D8ABC&color=fff`,
+        status: 'Active Screened',
+        summary: `Strategic neural analysis complete. Candidate achieved a confidence score of ${app.matchScore}% during autonomous screening.`,
+      }));
+
+      // Merge and remove duplicates (if a mock and live conflict, prioritizing live is tough without shared keys, but we'll just prepend live)
+      setCandidates([...liveCandidates, ...mockCandidates]);
       setLoading(false);
     }, 1200);
     return () => clearTimeout(timer);
@@ -43,6 +62,7 @@ const ExecutiveCandidates = () => {
                          cand.role.toLowerCase().includes(searchTerm.toLowerCase());
     
     if (!matchesSearch) return false;
+    if (jobId && cand.jobId !== jobId) return false;
     if (filter === 'All') return true;
     if (filter === 'Top Match') return cand.matchScore >= 90;
     if (filter === 'Shortlisted') return cand.status === 'Shortlisted';

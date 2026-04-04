@@ -43,6 +43,19 @@ function Dashboard() {
     role: user.role || 'Senior Professional' 
   };
 
+  // Pull live applications and merge with database fallbacks
+  const storedLiveApps = JSON.parse(localStorage.getItem('liveApplications') || '[]');
+  
+  // Filter live apps for this user
+  const userLiveApps = storedLiveApps.filter(app => app.candidateEmail === user.email);
+  
+  const userApplications = [
+    ...userLiveApps,
+    ...userProfile.applications.filter(fallbackApp => 
+      !userLiveApps.some(live => live.jobId === fallbackApp.jobId)
+    )
+  ];
+
   const matchedJobs = jobs.slice(0, 3);
   const displayedSkills = showAllSkills ? userProfile.skills : userProfile.skills.slice(0, 8);
 
@@ -62,6 +75,7 @@ function Dashboard() {
       case 'pending': return 'var(--warning-bg)';
       case 'rejected': return 'var(--danger-bg)';
       case 'accepted': return 'rgba(79, 70, 229, 0.1)';
+      case 'screening complete': return 'rgba(6, 182, 212, 0.1)';
       default: return 'var(--bg-secondary)';
     }
   };
@@ -182,8 +196,8 @@ function Dashboard() {
               </thead>
               <tbody>
                 <AnimatePresence>
-                  {userProfile.applications.map((app) => {
-                    const job = jobs.find(j => j._id === app.jobId || j.id === app.jobId);
+                  {userApplications.map((app) => {
+                    const job = jobs.find(j => j._id === app.jobId || j.id === app.jobId) || { title: 'Unknown Role', company: 'Unknown Company' };
                     const statusColor = getStatusColor(app.status);
                     const statusBgColor = getStatusBgColor(app.status);
                     return (

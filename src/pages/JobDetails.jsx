@@ -85,10 +85,15 @@ function JobDetails() {
   const handleApplySubmit = async (e) => {
     e.preventDefault();
     setIsApplying(true);
-    await new Promise(r => setTimeout(r, 2000));
+    
+    // Simulate application processing
+    await new Promise(r => setTimeout(r, 1500));
+    
     setIsApplying(false);
     setShowApplyModal(false);
-    // Success feedback could be more 'Cyber' too
+    
+    // Wire up the pipeline: immediately forward the candidate to the AI Technical Screen
+    navigate('/interview-schedule');
   };
 
   if (loading) return (

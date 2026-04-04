@@ -1,387 +1,237 @@
-// InterviewSchedule.jsx - Professional Scheduling Center
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { format, addDays } from 'date-fns';
 import { jobs } from '../data/jobs';
+import { authService } from '../services/auth';
 import './InterviewSchedule.css';
 
-// Animation variants
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -30 },
-  transition: { duration: 0.4 }
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const cardVariants = {
-  initial: { opacity: 0, scale: 0.95 },
-  animate: { opacity: 1, scale: 1 },
-  hover: { 
-    y: -4,
-    transition: { duration: 0.2 }
-  }
-};
+const INTERVIEW_SCRIPT = [
+  "Welcome to the Aicruit Neural Screening Chamber. I am the autonomous assessment operative. To begin, please confirm your primary technical domain and years of active deployment.",
+  "Understood. We are analyzing your profile for the '{jobTitle}' position. Could you describe a recent scalable architecture you designed, and the specific latency reduction you achieved?",
+  "Intriguing. How do you handle asynchronous state synchronization across distributed micro-frontends?",
+  "Excellent response. Finally, describe a critical system failure you encountered, and your exact methodology for executing a zero-downtime recovery.",
+  "Processing your responses through our neural matrix..." // This is a system transition message
+];
 
 function InterviewSchedule() {
   const [selectedJob, setSelectedJob] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [interviewType, setInterviewType] = useState('phone');
-  const [notes, setNotes] = useState('');
-  const [scheduled, setScheduled] = useState(false);
-  const [scheduledInterviews, setScheduledInterviews] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isScreening, setIsScreening] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [screeningComplete, setScreeningComplete] = useState(false);
+  const [confidenceScore, setConfidenceScore] = useState(0);
+  
+  const messagesEndRef = useRef(null);
 
-  const timeSlots = [
-    '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-    '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
-    '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM'
-  ];
-
-  const getMinDate = () => {
-    return format(addDays(new Date(), 1), 'yyyy-MM-dd');
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const getMaxDate = () => {
-    return format(addDays(new Date(), 60), 'yyyy-MM-dd');
-  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
 
-  const handleSchedule = async (e) => {
+  const startScreening = (e) => {
     e.preventDefault();
-    if (!selectedJob || !selectedDate || !selectedTime) return;
-
-    setIsSubmitting(true);
+    if (!selectedJob) return;
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
+    setIsScreening(true);
     const jobData = jobs.find(j => j.id === selectedJob);
-    const interview = {
-      id: Date.now(),
-      jobId: selectedJob,
-      jobTitle: jobData.title,
-      company: jobData.company,
-      companyLogo: jobData.logo,
-      date: selectedDate,
-      time: selectedTime,
-      type: interviewType,
-      notes: notes,
-      status: 'scheduled',
-      scheduledAt: new Date().toISOString()
+    
+    // Initial delay before AI speaks
+    setTimeout(() => {
+      triggerAIResponse(0, jobData.title);
+    }, 1000);
+  };
+
+  const triggerAIResponse = (stepIndex, jobTitle = '') => {
+    setIsTyping(true);
+    
+    // Simulate thinking time
+    setTimeout(() => {
+      let text = INTERVIEW_SCRIPT[stepIndex];
+      // Note: we fetch job again if jobTitle wasn't provided since state might be stale in timeout closure without proper deps
+      const currentJob = jobs.find(j => j.id === selectedJob);
+      const titleToUse = jobTitle || currentJob?.title || 'the targeted';
+
+      if (text.includes('{jobTitle}')) {
+        text = text.replace('{jobTitle}', titleToUse);
+      }
+
+      setMessages(prev => [...prev, { id: Date.now(), type: 'ai', text }]);
+      setIsTyping(false);
+      setCurrentStep(stepIndex + 1);
+
+      // If it was the final processing message, trigger completion
+      if (stepIndex === INTERVIEW_SCRIPT.length - 1) {
+        setTimeout(finalizeScreening, 3000);
+      }
+    }, 1500);
+  };
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isTyping || screeningComplete) return;
+
+    setMessages(prev => [...prev, { id: Date.now(), type: 'user', text: inputValue }]);
+    setInputValue('');
+    
+    if (currentStep < INTERVIEW_SCRIPT.length) {
+      const jobData = jobs.find(j => j.id === selectedJob);
+      triggerAIResponse(currentStep, jobData?.title);
+    }
+  };
+
+  const finalizeScreening = () => {
+    const finalScore = Math.floor(Math.random() * (98 - 85 + 1) + 85); // Random high score
+    setConfidenceScore(finalScore);
+    setScreeningComplete(true);
+    setMessages(prev => [...prev, { 
+      id: Date.now(), 
+      type: 'ai', 
+      text: `Screening Terminated. Neural analysis complete. Candidate compatibility for this architecture is rated at ${finalScore}%. The executive team has been notified.` 
+    }]);
+
+    // Save to LocalStorage layer
+    const currentUser = authService.getCurrentUser() || { name: 'Guest User', email: 'guest@aicruit.com' };
+    const jobData = jobs.find(j => j.id === selectedJob) || { id: selectedJob, title: 'Unknown Job' };
+    
+    const applicationRecord = {
+      id: `app-${Date.now()}`,
+      jobId: jobData.id,
+      candidateName: currentUser.name,
+      candidateEmail: currentUser.email,
+      role: currentUser.role || 'Senior Professional',
+      matchScore: finalScore,
+      skills: ["React", "Node.js", "System Architecture", "Leadership"], // Fallback skills
+      status: 'Screening Complete',
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     };
 
-    setScheduledInterviews([interview, ...scheduledInterviews]);
-    setScheduled(true);
-    setIsSubmitting(false);
-
-    // Reset form
-    setTimeout(() => {
-      setSelectedJob('');
-      setSelectedDate('');
-      setSelectedTime('');
-      setInterviewType('phone');
-      setNotes('');
-      setScheduled(false);
-    }, 20000);
+    const existingApps = JSON.parse(localStorage.getItem('liveApplications') || '[]');
+    localStorage.setItem('liveApplications', JSON.stringify([applicationRecord, ...existingApps]));
   };
 
-  const cancelInterview = (id) => {
-    setScheduledInterviews(scheduledInterviews.filter(i => i.id !== id));
-  };
-
-  const getDateDisplay = (dateStr) => {
-    const date = new Date(dateStr + 'T00:00:00');
-    return format(date, 'EEE, MMM d, yyyy');
-  };
-
-  const getTimeRemaining = (dateStr, timeStr) => {
-    const interviewDateTime = new Date(`${dateStr} ${timeStr}`);
-    const now = new Date();
-    const diffHours = Math.floor((interviewDateTime - now) / (1000 * 60 * 60));
-    
-    if (diffHours < 0) return 'Past';
-    if (diffHours < 24) return `${diffHours} hours remaining`;
-    const diffDays = Math.floor(diffHours / 24);
-    return `${diffDays} days remaining`;
-  };
-
-  const getInterviewTypeIcon = (type) => {
-    switch(type) {
-      case 'phone': return '📞';
-      case 'video': return '🎥';
-      case 'in-person': return '🏢';
-      default: return '📅';
-    }
-  };
-
-  const getInterviewTypeColor = (type) => {
-    switch(type) {
-      case 'phone': return '#10b981';
-      case 'video': return '#0ea5e9';
-      case 'in-person': return '#f59e0b';
-      default: return '#6b7280';
-    }
+  const resetScreening = () => {
+    setIsScreening(false);
+    setMessages([]);
+    setCurrentStep(0);
+    setScreeningComplete(false);
+    setInputValue('');
+    setSelectedJob('');
   };
 
   return (
-    <div className="interview-schedule-professional">
-      <div className="scheduler-container">
-        {/* Professional Header */}
-        <header className="scheduler-header-clean">
-           <div className="scheduler-breadcrumbs">
-              <span className="crumb">Platform</span> <span className="sep">/</span> <span className="active">Interview Scheduler</span>
-           </div>
-           
-           <div className="header-info-row">
-              <div className="title-block">
-                 <h1>Interview <span className="highlight-color">Scheduler</span></h1>
-                 <p className="subtitle">Coordinate your upcoming interviews and technical discussions with recruiters.</p>
-              </div>
-              
-              <div className="scheduler-stats-board glass-panel">
-                 <div className="schedule-stat-node">
-                    <span className="label">Scheduled</span>
-                    <span className="value">{scheduledInterviews.length}</span>
-                 </div>
-                 <div className="schedule-stat-divider"></div>
-                 <div className="schedule-stat-node">
-                    <span className="label">Next 7 Days</span>
-                    <span className="value highlight">
-                      {scheduledInterviews.filter(i => {
-                        const diff = (new Date(i.date) - new Date()) / (1000 * 60 * 60 * 24);
-                        return diff >= 0 && diff <= 7;
-                      }).length}
-                    </span>
-                 </div>
-              </div>
-           </div>
-        </header>
-
-        <motion.div 
-          className="scheduler-main-grid"
-          variants={staggerContainer}
-          initial="initial"
-          animate="animate"
-        >
-          {/* Scheduling Form Card */}
+    <div className="ai-screen-container">
+      <AnimatePresence mode="wait">
+        {!isScreening ? (
           <motion.div 
-            className="scheduler-form-panel glass-panel"
-            variants={cardVariants}
+            key="setup"
+            className="ai-setup-chamber"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
           >
-            <div className="form-header-clean">
-              <h2>Schedule New Interview</h2>
-              <p className="form-subtitle">Choose your preferred time slot for the selected position.</p>
+            <div className="chamber-header">
+              <div className="pulsing-core"></div>
+              <h1>AI Technical Screen</h1>
+              <p>Initiate autonomous pre-screening protocols.</p>
             </div>
-            
-            <AnimatePresence>
-              {scheduled && (
-                <motion.div 
-                  className="success-message-banner"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <span className="success-icon">✅</span>
-                  Successfully scheduled! Your recruiter has been notified.
-                </motion.div>
-              )}
-            </AnimatePresence>
 
-            <form onSubmit={handleSchedule} className="scheduler-form">
-              <div className="form-group full-width">
-                <label className="input-label-clean">Select Job Position *</label>
-                <select
-                  value={selectedJob}
+            <form onSubmit={startScreening} className="chamber-form">
+              <div className="form-group">
+                <label>Target Architecture (Position)</label>
+                <select 
+                  value={selectedJob} 
                   onChange={(e) => setSelectedJob(e.target.value)}
                   required
-                  className="scheduler-select"
                 >
-                  <option value="">-- Choose a job position --</option>
+                  <option value="">-- Connect to Job Protocol --</option>
                   {jobs.map(job => (
                     <option key={job.id} value={job.id}>
-                      {job.title} at {job.company}
+                      {job.title} // {job.company}
                     </option>
                   ))}
                 </select>
               </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="input-label-clean">Interview Date *</label>
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    min={getMinDate()}
-                    max={getMaxDate()}
-                    required
-                    className="scheduler-input"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label className="input-label-clean">Preferred Time *</label>
-                  <select
-                    value={selectedTime}
-                    onChange={(e) => setSelectedTime(e.target.value)}
-                    required
-                    className="scheduler-select"
-                  >
-                    <option value="">-- Select time slot --</option>
-                    {timeSlots.map(time => (
-                      <option key={time} value={time}>{time}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group full-width">
-                <label className="input-label-clean">Interview Type *</label>
-                <div className="interview-type-grid">
-                  {[
-                    { value: 'phone', label: 'Phone', icon: '📞', color: '#10b981' },
-                    { value: 'video', label: 'Video', icon: '🎥', color: '#0ea5e9' },
-                    { value: 'in-person', label: 'In-Person', icon: '🏢', color: '#f59e0b' }
-                  ].map(type => (
-                    <label
-                      key={type.value}
-                      className={`type-option-card ${interviewType === type.value ? 'selected' : ''}`}
-                      style={{
-                        '--accent-color': type.color
-                      }}
-                    >
-                      <input
-                        type="radio"
-                        value={type.value}
-                        checked={interviewType === type.value}
-                        onChange={(e) => setInterviewType(e.target.value)}
-                      />
-                      <span className="type-icon">{type.icon}</span>
-                      <span className="type-label">{type.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="form-group full-width">
-                <label className="input-label-clean">
-                   Additional Notes (Optional)
-                </label>
-                <textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Mention preparation requirements, links, or specific topics..."
-                  rows="3"
-                  className="scheduler-textarea"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="btn-schedule-primary"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Scheduling...' : 'Confirm Schedule'}
+              
+              <button type="submit" className="btn-initiate" disabled={!selectedJob}>
+                INITIATE PROTOCOL
               </button>
             </form>
           </motion.div>
-
-          {/* Scheduled Interviews List */}
+        ) : (
           <motion.div 
-            className="scheduled-interviews-pane"
-            variants={cardVariants}
+            key="chat"
+            className="ai-chat-chamber"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
           >
-            <div className="pane-header-clean">
-              <h2>Upcoming Interviews</h2>
-              {scheduledInterviews.length > 0 && (
-                <span className="count-badge-minimal">
-                  {scheduledInterviews.length} Total
-                </span>
+            <div className="chat-header-luxe">
+              <div className="ai-identity">
+                <div className="ai-avatar">
+                  <div className="ai-core"></div>
+                </div>
+                <div className="ai-info">
+                  <h3>Aicruit Autonomous Assessor</h3>
+                  <span className="status-text blink">Live Neural Connection Active</span>
+                </div>
+              </div>
+              {screeningComplete && (
+                <div className="final-score-badge">
+                  <span className="lbl">Match Confidence</span>
+                  <span className="val">{confidenceScore}%</span>
+                </div>
               )}
+              <button className="btn-abort" onClick={resetScreening}>Abort</button>
             </div>
 
-            <div className="interviews-activity-list">
-              <AnimatePresence mode="popLayout">
-                {scheduledInterviews.length === 0 ? (
-                  <motion.div 
-                    className="empty-schedule-state"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <div className="empty-icon-box">📅</div>
-                    <p>No interviews scheduled yet</p>
-                    <span>Use the form on the left to coordinate your first discussion.</span>
-                  </motion.div>
-                ) : (
-                  scheduledInterviews.map((interview, index) => (
-                    <motion.div
-                      key={interview.id}
-                      className="interview-item-card glass-panel"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.98 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <div className="card-top-row">
-                        <div className="job-info">
-                          <h3>{interview.jobTitle}</h3>
-                          <span className="company-text">{interview.company}</span>
-                        </div>
-                        <span 
-                          className="type-badge-clean"
-                          style={{
-                            backgroundColor: `${getInterviewTypeColor(interview.type)}15`,
-                            color: getInterviewTypeColor(interview.type)
-                          }}
-                        >
-                          {getInterviewTypeIcon(interview.type)} {interview.type.charAt(0).toUpperCase() + interview.type.slice(1)}
-                        </span>
-                      </div>
+            <div className="chat-log-luxe custom-scrollbar">
+              {messages.map((msg) => (
+                <motion.div 
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 10, x: msg.type === 'user' ? 20 : -20 }}
+                  animate={{ opacity: 1, y: 0, x: 0 }}
+                  className={`message-bubble ${msg.type}`}
+                >
+                  <div className="msg-content">{msg.text}</div>
+                </motion.div>
+              ))}
+              
+              {isTyping && (
+                <div className="message-bubble ai typing">
+                  <div className="msg-content">
+                    <span className="dot"></span>
+                    <span className="dot"></span>
+                    <span className="dot"></span>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
 
-                      <div className="card-details-grid">
-                        <div className="detail-node">
-                          <span className="lbl">Date</span>
-                          <span className="val">{getDateDisplay(interview.date)}</span>
-                        </div>
-                        <div className="detail-node">
-                          <span className="lbl">Time</span>
-                          <span className="val">{interview.time}</span>
-                        </div>
-                        <div className="detail-node">
-                          <span className="lbl">Remaining</span>
-                          <span className="val highlight">{getTimeRemaining(interview.date, interview.time)}</span>
-                        </div>
-                      </div>
-
-                      {interview.notes && (
-                        <div className="card-notes-box">
-                          <strong>Note:</strong> {interview.notes}
-                        </div>
-                      )}
-
-                      <button
-                        onClick={() => cancelInterview(interview.id)}
-                        className="btn-cancel-minimal"
-                      >
-                        Cancel
-                      </button>
-                    </motion.div>
-                  ))
-                )}
-              </AnimatePresence>
+            <div className="chat-input-area">
+              <form onSubmit={handleSendMessage} className={`input-form-luxe ${screeningComplete || currentStep === INTERVIEW_SCRIPT.length ? 'disabled' : ''}`}>
+                <input 
+                  type="text" 
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder={screeningComplete ? "Session Terminated." : "Transmit response..."}
+                  disabled={isTyping || screeningComplete || currentStep === INTERVIEW_SCRIPT.length}
+                />
+                <button 
+                  type="submit" 
+                  className="btn-transmit"
+                  disabled={!inputValue.trim() || isTyping || screeningComplete || currentStep === INTERVIEW_SCRIPT.length}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </form>
             </div>
           </motion.div>
-        </motion.div>
-      </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

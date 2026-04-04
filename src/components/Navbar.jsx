@@ -42,6 +42,7 @@ function Navbar({ isAuthPage }) {
     ...(!isRecruiter && !isExecutiveRoute ? [
       { path: '/jobs', label: 'Job' }, 
       { path: '/skill-assessment', label: 'Assessment', disabled: !user },
+      { path: '/interview-schedule', label: 'AI Screen', disabled: !user },
       { path: '/recommendations', label: 'AI Match', disabled: !user },
     ] : []),
     ...(isRecruiter || isExecutiveRoute ? [

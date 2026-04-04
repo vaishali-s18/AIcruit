@@ -56,6 +56,7 @@ export const mockExecutiveJobs = [
 export const mockCandidates = [
   {
     id: 'cand-1',
+    jobId: 'job-1',
     name: 'Alex Johnson',
     role: 'Full Stack Developer',
     experience: '6 Years',
@@ -67,6 +68,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-2',
+    jobId: 'job-2',
     name: 'Maria Garcia',
     role: 'Principal Engineer',
     experience: '10 Years',
@@ -78,6 +80,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-3',
+    jobId: 'job-1',
     name: 'James Wilson',
     role: 'Frontend Specialist',
     experience: '4 Years',
@@ -89,6 +92,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-4',
+    jobId: 'job-3',
     name: 'Sarah Chen',
     role: 'Senior Product Designer',
     experience: '7 Years',
@@ -100,6 +104,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-5',
+    jobId: 'job-2',
     name: 'David Chen',
     role: 'DevOps Strategist',
     experience: '8 Years',
@@ -111,6 +116,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-6',
+    jobId: 'job-1',
     name: 'Elena Rodriguez',
     role: 'Mobile Architect',
     experience: '5 Years',
@@ -122,6 +128,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-7',
+    jobId: 'job-3',
     name: 'Michael Scott',
     role: 'QA Protocol Lead',
     experience: '9 Years',
@@ -133,6 +140,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-8',
+    jobId: 'job-2',
     name: 'Aisha Kahn',
     role: 'Data Scientist',
     experience: '4 Years',
@@ -144,6 +152,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-9',
+    jobId: 'job-1',
     name: 'Robert Miller',
     role: 'Backend Architect',
     experience: '12 Years',
@@ -155,6 +164,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-10',
+    jobId: 'job-3',
     name: 'Chloe Zhao',
     role: 'UX Researcher',
     experience: '6 Years',
@@ -166,6 +176,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-11',
+    jobId: 'job-2',
     name: 'Liam Neeson',
     role: 'Security Specialist',
     experience: '15 Years',
@@ -177,6 +188,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-12',
+    jobId: 'job-1',
     name: 'Nina Simone',
     role: 'Frontend Strategist',
     experience: '5 Years',
@@ -188,6 +200,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-13',
+    jobId: 'job-3',
     name: 'Oscar Isaac',
     role: 'Android Developer',
     experience: '7 Years',
@@ -199,6 +212,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-14',
+    jobId: 'job-2',
     name: 'Petra Kvitova',
     role: 'Cloud Engineer',
     experience: '4 Years',
@@ -210,6 +224,7 @@ export const mockCandidates = [
   },
   {
     id: 'cand-15',
+    jobId: 'job-1',
     name: 'Quentin Blake',
     role: 'Illustrator Designer',
     experience: '10 Years',

@@ -1,61 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 import CandidateProfileHeader from './CandidateProfileHeader';
 import './CandidateResumeModal.css';
 
-const CandidateResumeModal = ({ candidate, isOpen, onClose, onStatusChange }) => {
-  const resumeRef = useRef(null);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-
+const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
   if (!isOpen || !candidate) return null;
-
-  const handleDownloadPDF = async () => {
-    if (!resumeRef.current) return;
-    
-    try {
-      setIsGeneratingPDF(true);
-      
-      // Temporarily hide the close button during capture
-      const closeBtn = document.querySelector('.close-resume-btn');
-      if (closeBtn) closeBtn.style.display = 'none';
-
-      // Capture the styled DOM node as an image
-      const canvas = await html2canvas(resumeRef.current, {
-        scale: 2, // Higher scale for better resolution
-        useCORS: true, 
-        backgroundColor: '#020617', // Match the dark theme background
-      });
-
-      // Restore the close button
-      if (closeBtn) closeBtn.style.display = 'block';
-
-      const imgData = canvas.toDataURL('image/png');
-      
-      // Calculate PDF dimensions (A4 format)
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      
-      // Trigger automatic direct download
-      pdf.save(`${candidate.name.replace(/\s+/g, '_')}_CV.pdf`);
-      
-    } catch (error) {
-      console.error("Error generating PDF:", error);
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
 
   return (
     <AnimatePresence>
       <div className="resume-modal-overlay" onClick={onClose}>
         <motion.div 
           className="resume-modal-content glass-card-luxe"
-          ref={resumeRef}
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -63,11 +17,7 @@ const CandidateResumeModal = ({ candidate, isOpen, onClose, onStatusChange }) =>
         >
           <button className="close-resume-btn" onClick={onClose}>✕</button>
           
-          <CandidateProfileHeader 
-            candidate={candidate} 
-            onDownload={handleDownloadPDF} 
-            isDownloading={isGeneratingPDF} 
-          />
+          <CandidateProfileHeader candidate={candidate} />
 
           <div className="resume-layout-centralized">
             <main className="resume-main-centered">
