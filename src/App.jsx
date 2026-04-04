@@ -21,8 +21,8 @@ import ExecutiveAnalytics from './pages/executive/ExecutiveAnalytics';
 import ExecutiveSettings from './pages/executive/ExecutiveSettings';
 import ExecutiveLayout from './components/layouts/ExecutiveLayout';
 import ChatBot from './components/ChatBot';
+import AuthModal from './components/auth/AuthModal';
 import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
 
 function AppContent() {
   const location = useLocation();
@@ -31,17 +31,18 @@ function AppContent() {
   return (
     <div className={`app-container ${isAuthPage ? 'auth-mode-active' : ''}`}>
       {!location.pathname.startsWith('/executive') && <Navbar isAuthPage={isAuthPage} />}
+      <AuthModal />
       <main className="main-content">
           <Routes>
-            {/* Public Access Routes */}
+            {/* Public Access Routes - Now only landing and Auth */}
             <Route path="/" element={<Landing />} />
-            <Route path="/jobs" element={<Jobs />} />
-            <Route path="/job/:id" element={<JobDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
 
             {/* Protected Platform Routes */}
             <Route element={<ProtectedRoute />}>
+              <Route path="/jobs" element={<Jobs />} />
+              <Route path="/job/:id" element={<JobDetails />} />
               <Route path="/upload-resume" element={<UploadResume />} />
               <Route path="/resume-scan" element={<ResumeScan />} />
               <Route path="/recommendations" element={<Recommendations />} />

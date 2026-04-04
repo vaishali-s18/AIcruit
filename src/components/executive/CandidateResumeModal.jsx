@@ -39,13 +39,13 @@ const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
 
               <section className="resume-section-centered">
                 <div className="ai-summary-box-luxe">
-                  <div className="ai-badge-luxe">AI STRATEGIC SUMMARY</div>
+                  <div className="ai-badge-luxe">AI PROFILE SUMMARY</div>
                   <p>{candidate.summary}</p>
                 </div>
               </section>
 
               <section className="resume-section-centered">
-                <h2>Strategic Experience</h2>
+                <h2>Work Experience</h2>
                 <div className="experience-timeline-luxe">
                    <div className="exp-item-luxe">
                       <div className="exp-marker-luxe"></div>
@@ -81,7 +81,7 @@ const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
               </section>
 
               <section className="resume-section-centered">
-                <h2>Core Expertise</h2>
+                <h2>Skills & Expertise</h2>
                 <div className="skill-cloud-centralized">
                   {candidate.skills.map(skill => (
                     <span key={skill} className="skill-tag-luxe active">{skill}</span>
@@ -90,12 +90,28 @@ const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
               </section>
 
               <section className="resume-section-centered">
-                <h2>Scholastic Integrity</h2>
+                <h2>Education</h2>
                 <div className="edu-item-luxe">
                    <h3>M.S. in Neural Computation</h3>
                    <p>Stanford University • High Honors</p>
                 </div>
               </section>
+
+              {candidate.transcript && (
+                <section className="neural-transcript-section">
+                  <h2>AI Interview Conversation</h2>
+                  <div className="transcript-log">
+                    {candidate.transcript.map((msg, idx) => (
+                      <div key={msg.id || idx} className={`transcript-entry ${msg.type}`}>
+                        <span className="transcript-label">{msg.type === 'ai' ? 'AI Assistant' : 'Candidate'}</span>
+                        <div className="transcript-bubble">
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
             </main>
           </div>
         </motion.div>

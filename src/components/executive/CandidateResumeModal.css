@@ -241,3 +241,93 @@
   left: 0;
   color: var(--primary-cyan);
 }
+
+/* Neural Transcript Styles */
+.neural-transcript-section {
+  background: rgba(1, 4, 9, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 32px;
+  margin-top: 40px;
+}
+
+.neural-transcript-section h2 {
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--primary-cyan);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.neural-transcript-section h2::before {
+  content: "";
+  width: 8px; height: 8px;
+  background: var(--primary-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary-cyan);
+}
+
+.transcript-log {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.transcript-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.transcript-entry.ai { align-items: flex-start; }
+.transcript-entry.user { align-items: flex-end; }
+
+.transcript-bubble {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 85%;
+}
+
+.transcript-entry.ai .transcript-bubble {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  color: #f1f5f9;
+  border-top-left-radius: 2px;
+}
+
+.transcript-entry.user .transcript-bubble {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  color: #fff;
+  border-top-right-radius: 2px;
+}
+
+.transcript-label {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+.transcript-entry.ai .transcript-label { color: var(--primary-cyan); }
+.transcript-entry.user .transcript-label { color: var(--primary-purple); }
+
+/* Dev Override Button */
+.btn-outline-luxe.dev-override {
+  border-color: rgba(6, 182, 212, 0.3);
+  color: var(--primary-cyan);
+  background: rgba(6, 182, 212, 0.05);
+}
+
+.btn-outline-luxe.dev-override:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: var(--primary-cyan);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}

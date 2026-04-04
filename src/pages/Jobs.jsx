@@ -58,22 +58,34 @@ function Jobs() {
 
   return (
     <div className="jobs-page-minimal">
+      <div className="matrix-overlay"></div>
       <div className="page-header-bg"></div>
       
       <div className="jobs-container">
         <header className="jobs-hero-section">
-           <motion.h1 
-             initial={{ opacity: 0, y: 10 }}
-             animate={{ opacity: 1, y: 0 }}
+           <motion.div 
+             className="hud-status-bar"
+             initial={{ opacity: 0, scale: 0.8 }}
+             animate={{ opacity: 1, scale: 1 }}
+             transition={{ duration: 0.5 }}
            >
-              Find your next <span className="blue-accent">career milestone</span>
+             <div className="status-pulse"></div>
+             Live Job Listings
+           </motion.div>
+
+           <motion.h1 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.7, ease: "easeOut" }}
+           >
+              Find your next <span className="blue-accent">Job Opening</span>
            </motion.h1>
            
            <motion.p 
              className="hero-subtitle-text"
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
-             transition={{ delay: 0.1 }}
+             transition={{ delay: 0.3, duration: 0.8 }}
            >
               Explore opportunities that match your expertise and passion.
            </motion.p>
@@ -84,11 +96,12 @@ function Jobs() {
         </header>
 
         <main className="jobs-content-area card">
-           <div className="results-toolbar-clean">
-              <div className="result-stats">
-                 <span className="count-badge">{filteredJobs.length}</span>
-                 <span className="stats-label">jobs found</span>
-              </div>
+            <div className="results-toolbar-clean">
+                <div className="result-stats">
+                   <span className="count-badge">{filteredJobs.length}</span>
+                   <span className="stats-label">Jobs Found</span>
+                </div>
+
               <div className="results-actions">
                  <div className="sort-control">
                     <span className="sort-label">Sort by:</span>

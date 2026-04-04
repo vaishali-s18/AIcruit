@@ -48,8 +48,35 @@ export const AuthProvider = ({ children }) => {
     return result;
   };
 
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalTab, setAuthModalTab] = useState('login'); // 'login' or 'signup'
+  const [intendedPath, setIntendedPath] = useState(null);
+
+  const openAuthModal = (tab = 'login', path = null) => {
+    setAuthModalTab(tab);
+    setIntendedPath(path);
+    setIsAuthModalOpen(true);
+  };
+
+  const closeAuthModal = () => {
+    setIsAuthModalOpen(false);
+    setIntendedPath(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, updateProfile }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      loading, 
+      login, 
+      logout, 
+      updateProfile,
+      isAuthModalOpen,
+      authModalTab,
+      intendedPath,
+      openAuthModal,
+      closeAuthModal,
+      setAuthModalTab
+    }}>
       {children}
     </AuthContext.Provider>
   );

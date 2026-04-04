@@ -161,7 +161,7 @@ function Dashboard() {
 
           <motion.section className="dashboard-card education-panel" variants={cardVariants}>
             <div className="card-header-clean">
-              <h2><span className="header-icon">🎓</span> Academic History</h2>
+              <h2><span className="header-icon">🎓</span> Education</h2>
               <button className="add-entry-btn">+ Add</button>
             </div>
             <div className="education-list">
@@ -197,7 +197,10 @@ function Dashboard() {
               <tbody>
                 <AnimatePresence>
                   {userApplications.map((app) => {
-                    const job = jobs.find(j => j._id === app.jobId || j.id === app.jobId) || { title: 'Unknown Role', company: 'Unknown Company' };
+                    const stringId = String(app.jobId);
+                    // Match against standard candidate jobs or executive jobs to handle mock inconsistencies
+                    const job = jobs.find(j => String(j.id) === stringId || String(j._id) === stringId) || 
+                                { title: `Job Reference #${stringId}`, company: 'Aicruit Network' };
                     const statusColor = getStatusColor(app.status);
                     const statusBgColor = getStatusBgColor(app.status);
                     return (

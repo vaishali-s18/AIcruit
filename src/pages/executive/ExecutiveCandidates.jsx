@@ -37,6 +37,7 @@ const ExecutiveCandidates = () => {
         avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(app.candidateName)}&background=0D8ABC&color=fff`,
         status: 'Active Screened',
         summary: `Strategic neural analysis complete. Candidate achieved a confidence score of ${app.matchScore}% during autonomous screening.`,
+        transcript: app.transcript,
       }));
 
       // Merge and remove duplicates (if a mock and live conflict, prioritizing live is tough without shared keys, but we'll just prepend live)

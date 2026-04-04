@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { authService } from '../services/auth';
+import { useAuth } from '../context/AuthContext';
 import './Landing.css';
 
 const Icons = {
@@ -15,11 +16,19 @@ const Icons = {
 
 function Landing() {
   const navigate = useNavigate();
+  const auth = useAuth();
 
   useEffect(() => {
-    const user = authService.getCurrentUser();
-    if (user?.role === 'recruiter') { navigate('/executive/dashboard'); }
-  }, [navigate]);
+    if (auth.user?.role === 'recruiter') { navigate('/executive/dashboard'); }
+  }, [auth.user, navigate]);
+
+  const handleHeroAction = (path, tab = 'login') => {
+    if (auth.user) {
+      navigate(path);
+    } else {
+      auth.openAuthModal(tab, path);
+    }
+  };
 
   const valueProps = [
     { icon: <Icons.Zap />, title: "AI-Powered Matching", desc: "Our advanced algorithms match your skills with the perfect job opportunities in seconds." },
@@ -34,7 +43,7 @@ function Landing() {
   ];
 
   const testimonials = [
-    { name: "Sarah Jenkins", role: "Software Engineer", text: "AIcruit helped me find my current role at a top tech firm in less than two weeks. The matching is incredibly accurate!" },
+    { name: "Sarah Jenkins", role: "Software Engineer", text: "AIcruit helped me find my current role at a tech firm in less than two weeks. The matching is incredibly accurate!" },
     { name: "Michael Chen", role: "Product Manager", text: "The AI analysis of my resume gave me great insights into which skills I should highlight for the roles I wanted." }
   ];
 
@@ -58,7 +67,6 @@ function Landing() {
           </video>
           <div className="hero-overlay"></div>
           
-          {/* Ambient Glow Nodes */}
           <div className="ambient-glow" style={{ top: '20%', left: '10%', width: '400px', height: '400px', opacity: 0.15 }}></div>
           <div className="ambient-glow" style={{ bottom: '10%', right: '5%', width: '600px', height: '600px', opacity: 0.1 }}></div>
         </div>
@@ -70,15 +78,15 @@ function Landing() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="hero-title">
-            Find Your <span>Dream Job</span> <br /> With AI Precision
+            Find Your <span>Dream Job</span> <br /> With AI Matching
           </h1>
           <p className="hero-subtitle">
             Experience the next generation of professional matching. We decode your expertise to find roles that actually matter.
           </p>
 
           <div className="hero-actions">
-            <Link to="/upload-resume" className="btn-primary">Upload Resume</Link>
-            <Link to="/jobs" className="btn-secondary">Browse Jobs</Link>
+            <button onClick={() => handleHeroAction('/upload-resume', 'signup')} className="btn-primary">Upload Resume</button>
+            <button onClick={() => handleHeroAction('/jobs', 'login')} className="btn-secondary">Browse Jobs</button>
           </div>
 
           <p className="hero-trust-line">Trusted by thousands of professionals finding their dream careers.</p>
@@ -136,7 +144,7 @@ function Landing() {
       <section className="section companies-section">
         <div className="section-header">
           <h2 className="section-title">Top Companies Hiring on <span>AIcruit</span></h2>
-          <p className="section-subtitle">Join the elite ranks of professionals hired by global industry leaders.</p>
+          <p className="section-subtitle">Join the ranks of professionals hired by global industry leaders.</p>
         </div>
         
         <motion.div 

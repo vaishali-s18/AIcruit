@@ -1,150 +1,225 @@
-/* Auth.css - Vibe C: Human-Centric Glass Experience */
+/* Auth.css - High Stability & Visibility */
 
 .auth-container {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   position: relative;
   overflow: hidden;
-  padding: 6rem 1.5rem 2.5rem; /* Increased top padding to avoid navbar overlap */
-  z-index: 1;
+  padding: 5rem 1.5rem;
+  z-index: 10;
+  background-color: #020617; /* Fallback */
 }
 
-/* Immersive Corporate Executive Portal */
+/* Background Image Overlay */
 .auth-container::before {
   content: "";
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-   background-image: url("../assets/img.png");
+  background-image: url("../assets/img.png");
   background-size: cover;
   background-position: center;
   z-index: -2;
-  animation: subtle-pan 60s infinite alternate linear;
-  filter: brightness(0.9) contrast(1.4) saturate(1.1);
+  filter: brightness(0.6) contrast(1.2); /* Darkened for better form visibility */
 }
 
-@keyframes subtle-pan {
-  0% { transform: scale(1.1) translateX(-2%); }
-  100% { transform: scale(1.1) translateX(2%); }
-}
-
-/* Deep Cinematic Vignette - Softened */
-.auth-container::after {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(2, 6, 23, 0.8) 100%);
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* Glass-on-Glass Deep Unit - Ultra Compact */
+/* Form Container Card - Compact & Clean */
 .auth-box {
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(60px) saturate(1.8);
-  -webkit-backdrop-filter: blur(60px) saturate(1.8);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(15, 23, 42, 0.95); /* Nearly solid for clarity */
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  padding: 1rem 1.75rem;
+  padding: 2rem 1.75rem; /* Reduced padding for compact look */
   width: 100%;
-  max-width: 380px;
+  max-width: 380px; /* Reduced width */
   position: relative;
   box-shadow: 
-    0 40px 100px rgba(0, 0, 0, 0.8),
-    inset 0 0 0 1.5px rgba(255, 255, 255, 0.1);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  color: #fff;
+    0 40px 100px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(6, 182, 212, 0.1);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
 }
 
-.auth-box:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.3);
+.auth-logo { text-align: center; margin-bottom: 1.5rem; }
+.logo-icon { font-size: 2rem; display: block; margin-bottom: 0.25rem; }
+.logo-text { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.04em; color: #fff; }
+
+.auth-header { text-align: center; margin-bottom: 1.5rem; }
+.auth-header h1 { font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; }
+.auth-header p { color: rgba(255, 255, 255, 0.8); font-size: 0.85rem; }
+
+/* Form Elements */
+.auth-form-elite {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Tighter spacing */
 }
 
-/* Header & Typography - Ultra Compressed */
-.auth-logo { text-align: center; margin-bottom: 0.75rem; }
-.logo-icon { font-size: 1.5rem; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4)); }
-.logo-text { font-size: 1.25rem; font-weight: 800; color: #fff; letter-spacing: -0.04em; }
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
-.auth-header { text-align: center; margin-bottom: 1rem; }
-.auth-header h1 { font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.15rem; letter-spacing: -0.04em; }
-.auth-header p { color: rgba(255, 255, 255, 0.7); font-size: 0.75rem; font-weight: 500; }
-
-/* Form Fields - Sleek Modern White */
-.form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
-.form-group label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; color: rgba(255, 255, 255, 0.8); }
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
 .ops-input-field {
-  background: rgba(255, 255, 255, 0.03) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 0.85rem 1rem !important;
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 0.85rem 1rem !important; /* Smaller inputs */
   border-radius: 12px !important;
-  color: #fff !important;
-  font-weight: 500 !important;
+  color: #ffffff !important;
   font-size: 0.95rem !important;
+  font-weight: 500 !important;
   outline: none !important;
-  transition: all 0.3s !important;
-  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
 
 .ops-input-field:focus {
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05) !important;
+  border-color: #06b6d4 !important;
+  background: rgba(6, 182, 212, 0.05) !important;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.2) !important;
 }
 
-/* Action Execution Button */
-.elite-auth-btn {
-  width: 100%;
-  background: #fff;
-  color: #020617;
-  border: none;
-  padding: 1rem;
-  border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.3s var(--transition-bounce);
-  margin-top: 0.75rem;
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+/* Role Selector - Compact Pills */
+.role-selector-modern {
+  display: flex;
+  gap: 0.5rem;
 }
-
-.elite-auth-btn:hover:not(:disabled) {
-  transform: scale(1.02);
-  box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
-}
-
-/* Role Selection - Minimalist Pill */
-.role-selector-modern { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
 
 .role-btn {
-  flex: 1; padding: 0.75rem;
+  flex: 1;
+  padding: 0.65rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-  font-size: 0.85rem;
+  transition: all 0.3s;
+  font-size: 0.8rem;
 }
 
 .role-btn.active {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #fff;
-  color: #fff;
+  background: rgba(6, 182, 212, 0.1);
+  border-color: #06b6d4;
+  color: #06b6d4;
 }
 
-/* Error & Footer */
-.error-message { padding: 0.75rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #f87171; font-weight: 700; margin-bottom: 1.5rem; font-size: 0.8rem; }
+/* Primary Button High-Vis */
+button.elite-auth-btn {
+  width: 100% !important;
+  background: #ffffff !important;
+  color: #020617 !important;
+  border: none !important;
+  padding: 0.95rem !important; /* Smaller button */
+  border-radius: 14px !important;
+  font-size: 1rem !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  cursor: pointer !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  margin-top: 0.5rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4) !important;
+  display: block !important;
+}
 
-.auth-footer { text-align: center; margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
-.auth-footer p { color: rgba(255, 255, 255, 0.6); font-weight: 600; font-size: 0.85rem; }
-.auth-link { color: #fff; font-weight: 800; text-decoration: none; margin-left: 0.5rem; }
+button.elite-auth-btn:hover {
+  transform: translateY(-4px) !important;
+  background: linear-gradient(135deg, #0cebeb 0%, #29ffc6 100%) !important;
+  box-shadow: 0 15px 30px rgba(6, 182, 212, 0.5) !important;
+}
+
+/* Footer / Links */
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-footer p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+}
+
+.auth-link {
+  color: #38bdf8;
+  font-weight: 800;
+  text-decoration: none;
+  margin-left: 0.5rem;
+}
+
+.auth-link-btn {
+  background: none;
+  border: none;
+  color: #38bdf8;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  margin-left: 0.5rem;
+  transition: all 0.3s;
+}
+
+.auth-link-btn:hover {
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+  text-decoration: underline;
+}
+
+.auth-box-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
 .auth-link:hover { text-decoration: underline; }
 
+.error-message {
+  padding: 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  color: #f87171;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 640px) {
-  .auth-box { padding: 3rem 1.5rem; }
+  .auth-box { padding: 2.5rem 1.5rem; }
   .auth-header h1 { font-size: 1.75rem; }
 }
+
+/* AuthModal Logic Upgrades: Compact UI for Popup Mode */
+.auth-modal-content .auth-logo { margin-bottom: 0.5rem; }
+.auth-modal-content .logo-icon { font-size: 1.25rem; }
+.auth-modal-content .logo-text { font-size: 1.15rem; }
+.auth-modal-content .auth-header { margin-bottom: 0.75rem; }
+.auth-modal-content .auth-header h1 { font-size: 1.15rem; }
+.auth-modal-content .auth-header p { font-size: 0.7rem; }
+
+.auth-modal-content .auth-form-elite { gap: 0.65rem; }
+.auth-modal-content .form-group { gap: 0.2rem; }
+.auth-modal-content .ops-input-field { padding: 0.65rem 0.85rem !important; font-size: 0.85rem !important; }
+.auth-modal-content .role-btn { padding: 0.45rem; font-size: 0.7rem; }
+.auth-modal-content .elite-auth-btn { padding: 0.75rem !important; margin-top: 0.2rem !important; font-size: 0.9rem !important; }
+
+.auth-modal-content .auth-footer { margin-top: 0.75rem; padding-top: 0.75rem; }
+.auth-modal-content .auth-footer p { font-size: 0.75rem; }

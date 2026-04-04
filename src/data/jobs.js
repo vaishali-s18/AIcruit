@@ -414,5 +414,278 @@ export const jobs = [
     },
     benefits: ["Commuter Benefits", "Matching 401k", "Health Insurance"],
     company_image: "🏙️"
+  },
+  
+  // --- NEW ENTRY LEVEL & INTERNSHIP ROLES ---
+
+  {
+    id: 24,
+    title: "Backend Developer (Intern)",
+    company: "DataStream",
+    location: "Remote",
+    salary: "$30 - $45 / hour",
+    type: "Internship",
+    category: "Backend",
+    level: "Internship",
+    posted: "1 day ago",
+    description: "Learn how to build robust APIs and manage databases in a production environment. Mentorship provided.",
+    requirements: {
+      skills: ["Node.js", "Express", "SQL", "Git", "API"],
+      experience: 0
+    },
+    benefits: ["Stipend", "Flexible Hours", "Mentorship", "Possibility of Full-time"],
+    company_image: "⚙️"
+  },
+  {
+    id: 25,
+    title: "Junior Data Scientist",
+    company: "InsightAI",
+    location: "Remote",
+    salary: "$70,000 - $90,000",
+    type: "Full-time",
+    category: "Backend",
+    level: "Entry Level",
+    posted: "2 days ago",
+    description: "Recent graduates welcome! Work on cleaning data, building simple models, and visualizing insights.",
+    requirements: {
+      skills: ["Python", "Pandas", "Scikit-learn", "Certifications", "Statistics"],
+      experience: 0
+    },
+    benefits: ["Training Budget", "Health Insurance", "Remote Work"],
+    company_image: "📊"
+  },
+  {
+    id: 26,
+    title: "Cybersecurity Intern",
+    company: "ShieldCorp",
+    location: "Remote",
+    salary: "$35 - $50 / hour",
+    type: "Internship",
+    category: "Backend",
+    level: "Internship",
+    posted: "3 days ago",
+    description: "Assist our security team in monitoring network traffic and identifying potential vulnerabilities.",
+    requirements: {
+      skills: ["Network Security", "Linux", "CompTIA Security+", "Ethical Hacking", "Certifications"],
+      experience: 0
+    },
+    benefits: ["Mentorship", "Learning Resources", "Hardware Allowance"],
+    company_image: "🛡️"
+  },
+  {
+    id: 27,
+    title: "Junior UI/UX Designer",
+    company: "PixelPerfect",
+    location: "Remote",
+    salary: "$55,000 - $75,000",
+    type: "Full-time",
+    category: "Design",
+    level: "Entry Level",
+    posted: "1 day ago",
+    description: "Join our creative team to design modern web and mobile interfaces. Perfect for fresh design graduates.",
+    requirements: {
+      skills: ["Figma", "Design", "User Research", "Adobe XD", "Certifications"],
+      experience: 0
+    },
+    benefits: ["Creative Freedom", "Adobe Suite Subscription", "Remote Work"],
+    company_image: "🎨"
+  },
+  {
+    id: 28,
+    title: "DevOps Associate",
+    company: "CloudFlow",
+    location: "Austin, TX",
+    salary: "$80,000 - $100,000",
+    type: "Full-time",
+    category: "DevOps",
+    level: "Entry Level",
+    posted: "5 hours ago",
+    description: "Get started in DevOps. Help us maintain CI/CD pipelines and learn about cloud scaling.",
+    requirements: {
+      skills: ["Docker", "Linux", "AWS", "Git", "Certifications"],
+      experience: 1
+    },
+    benefits: ["AWS Certification Bonus", "Health Insurance", "401k"],
+    company_image: "☁️"
+  },
+  {
+    id: 29,
+    title: "Chief Design Officer",
+    company: "NovaUI",
+    location: "San Francisco, CA",
+    salary: "$250,000 - $350,000",
+    type: "Full-time",
+    category: "Design",
+    level: "Executive",
+    posted: "Just now",
+    description: "Shape the future of visual interactions at a global scale. Defining the next decade of digital aesthetics.",
+    requirements: {
+      skills: ["Executive Leadership", "Design Strategy", "Product Vision", "Brand Identity"],
+      experience: 12
+    },
+    benefits: ["Full Equity", "Global Travel", "Unlimited PTO", "Private Medical"],
+    company_image: "💎"
+  },
+  {
+    id: 30,
+    title: "GraphQL Backend Architect",
+    company: "GraphOS",
+    location: "Remote",
+    salary: "$140,000 - $190,000",
+    type: "Full-time",
+    category: "Backend",
+    level: "Senior",
+    posted: "2 hours ago",
+    description: "Designing hyper-efficient data schemas for a world-leading graph infrastructure.",
+    requirements: {
+      skills: ["GraphQL", "Node.js", "Apollo", "Database Design", "Performance Tuning"],
+      experience: 6
+    },
+    benefits: ["Remote", "Learning Budget", "Performance Bonus"],
+    company_image: "🛰️"
+  },
+  {
+    id: 31,
+    title: "Android Lead Engineer",
+    company: "MobileFirst",
+    location: "New York, NY",
+    salary: "$160,000 - $210,000",
+    type: "Full-time",
+    category: "Mobile",
+    level: "Senior",
+    posted: "1 day ago",
+    description: "Leading the development of a flagship Android application for millions of daily active users.",
+    requirements: {
+      skills: ["Kotlin", "Android Architecture", "Unit Testing", "Leadership", "CI/CD"],
+      experience: 8
+    },
+    benefits: ["Health Plan", "Stock Options", "Flexible Hours", "Gym Subsidy"],
+    company_image: "🤖"
+  },
+  {
+    id: 32,
+    title: "Security Operations Engineer",
+    company: "CipherGate",
+    location: "Remote",
+    salary: "$120,000 - $165,000",
+    type: "Full-time",
+    category: "DevOps",
+    level: "Mid-level",
+    posted: "3 days ago",
+    description: "Defending global financial infrastructure against high-level persistent threats.",
+    requirements: {
+      skills: ["Security Compliance", "Python", "Cloud Security", "Incident Response", "SIEM"],
+      experience: 4
+    },
+    benefits: ["Remote Work", "Mental Health Days", "Home Office Fund"],
+    company_image: "🛡️"
+  },
+  {
+    id: 33,
+    title: "Senior UI Designer",
+    company: "PixelPerfect",
+    location: "Remote",
+    salary: "$110,000 - $145,000",
+    type: "Full-time",
+    category: "Design",
+    level: "Senior",
+    posted: "5 days ago",
+    description: "Crafting beautiful, pixel-perfect interfaces for the next generation of fintech platforms.",
+    requirements: {
+      skills: ["UI Design", "Figma", "Typography", "Motion Design", "Design Systems"],
+      experience: 5
+    },
+    benefits: ["Remote-first", "Learning Budget", "Creative Sabbatical"],
+    company_image: "🎨"
+  },
+  {
+    id: 34,
+    title: "SRE (Infrastructure)",
+    company: "ScaleTech",
+    location: "Boulder, CO",
+    salary: "$135,000 - $180,000",
+    type: "Full-time",
+    category: "DevOps",
+    level: "Senior",
+    posted: "2 days ago",
+    description: "Maintaining extreme reliability for ultra-high-throughput systems.",
+    requirements: {
+      skills: ["Site Reliability", "Kubernetes", "Prometheus", "Golang", "Cloud Infrastructure"],
+      experience: 6
+    },
+    benefits: ["Annual Bonus", "Health Savings", "Flexible Hours", "Equity"],
+    company_image: "⚡"
+  },
+  {
+    id: 35,
+    title: "Principal Frontend Engineer",
+    company: "Vortex Labs",
+    location: "Remote",
+    salary: "$180,000 - $240,000",
+    type: "Full-time",
+    category: "Frontend",
+    level: "Staff",
+    posted: "Just now",
+    description: "Driving the frontend architecture for a decentralized data visualization engine.",
+    requirements: {
+      skills: ["React", "WebGL", "TypeScript", "Performance Engineering", "Strategy"],
+      experience: 10
+    },
+    benefits: ["Full Remote", "Stock Grant", "Research Sabbatical"],
+    company_image: "🌀"
+  },
+  {
+    id: 36,
+    title: "Creative Director",
+    company: "Prism Agency",
+    location: "Amsterdam, NL",
+    salary: "€90,000 - €120,000",
+    type: "Full-time",
+    category: "Design",
+    level: "Senior",
+    posted: "1 day ago",
+    description: "Lead our creative team to deliver award-winning brand experiences for global tech clients.",
+    requirements: {
+      skills: ["Creative Direction", "Brand Strategy", "Team Leadership", "Art Direction"],
+      experience: 8
+    },
+    benefits: ["Hybrid Work", "European Travel", "Flexible Friday", "Wellness Program"],
+    company_image: "🌈"
+  },
+  {
+    id: 37,
+    title: "Senior Full Stack Dev",
+    company: "FusionSoft",
+    location: "Remote",
+    salary: "$130,000 - $175,000",
+    type: "Full-time",
+    category: "Full Stack",
+    level: "Senior",
+    posted: "4 days ago",
+    description: "Building the engine for unified communications and real-time collaboration dashboards.",
+    requirements: {
+      skills: ["Next.js", "Node.js", "PostgreSQL", "Tailwind", "System Architecture"],
+      experience: 6
+    },
+    benefits: ["Remote", "Learning Stipend", "Flexible PTO", "Health Insurance"],
+    company_image: "💥"
+  },
+  {
+    id: 38,
+    title: "Staff iOS Engineer",
+    company: "Apollo Mobility",
+    location: "Remote",
+    salary: "$170,000 - $220,000",
+    type: "Full-time",
+    category: "Mobile",
+    level: "Staff",
+    posted: "2 days ago",
+    description: "Innovating the mobile layer for high-precision GPS and navigation systems.",
+    requirements: {
+      skills: ["Swift", "Core Location", "Advanced SwiftUI", "Mobile Security", "Mentorship"],
+      experience: 8
+    },
+    benefits: ["Full Remote", "Performance Bonus", "Technical Equipment Grant"],
+    company_image: "🧭"
   }
 ];

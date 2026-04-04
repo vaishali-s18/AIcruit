@@ -5,11 +5,11 @@ import { authService } from '../services/auth';
 import './InterviewSchedule.css';
 
 const INTERVIEW_SCRIPT = [
-  "Welcome to the Aicruit Neural Screening Chamber. I am the autonomous assessment operative. To begin, please confirm your primary technical domain and years of active deployment.",
-  "Understood. We are analyzing your profile for the '{jobTitle}' position. Could you describe a recent scalable architecture you designed, and the specific latency reduction you achieved?",
-  "Intriguing. How do you handle asynchronous state synchronization across distributed micro-frontends?",
-  "Excellent response. Finally, describe a critical system failure you encountered, and your exact methodology for executing a zero-downtime recovery.",
-  "Processing your responses through our neural matrix..." // This is a system transition message
+  "Welcome! I am your AI assistant for this interview. To start, please tell me about your technical background and total years of experience.",
+  "Great. I am reviewing your profile for the '{jobTitle}' position. Could you describe a recent project where you designed a scalable system and how you improved its performance?",
+  "That's interesting. How do you handle managing state in large applications?",
+  "Thank you. Finally, tell me about a difficult technical problem you solved and how you fixed it.",
+  "Analyzing your answers..."
 ];
 
 function InterviewSchedule() {
@@ -87,11 +87,17 @@ function InterviewSchedule() {
     const finalScore = Math.floor(Math.random() * (98 - 85 + 1) + 85); // Random high score
     setConfidenceScore(finalScore);
     setScreeningComplete(true);
-    setMessages(prev => [...prev, { 
-      id: Date.now(), 
-      type: 'ai', 
-      text: `Screening Terminated. Neural analysis complete. Candidate compatibility for this architecture is rated at ${finalScore}%. The executive team has been notified.` 
-    }]);
+
+    const finalMessages = [
+      ...messages,
+      { 
+        id: Date.now(), 
+        type: 'ai', 
+        text: `Interview complete. Your evaluation is finished. Your match score for this position is ${finalScore}%. The hiring team has been notified.` 
+      }
+    ];
+
+    setMessages(finalMessages);
 
     // Save to LocalStorage layer
     const currentUser = authService.getCurrentUser() || { name: 'Guest User', email: 'guest@aicruit.com' };
@@ -106,6 +112,7 @@ function InterviewSchedule() {
       matchScore: finalScore,
       skills: ["React", "Node.js", "System Architecture", "Leadership"], // Fallback skills
       status: 'Screening Complete',
+      transcript: finalMessages,
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
     };
 
@@ -135,8 +142,8 @@ function InterviewSchedule() {
           >
             <div className="chamber-header">
               <div className="pulsing-core"></div>
-              <h1>AI Technical Screen</h1>
-              <p>Initiate autonomous pre-screening protocols.</p>
+              <h1>AI Interview</h1>
+              <p>Start your automated technical screening.</p>
             </div>
 
             <form onSubmit={startScreening} className="chamber-form">
@@ -147,7 +154,7 @@ function InterviewSchedule() {
                   onChange={(e) => setSelectedJob(e.target.value)}
                   required
                 >
-                  <option value="">-- Connect to Job Protocol --</option>
+                  <option value="">-- Select a Job --</option>
                   {jobs.map(job => (
                     <option key={job.id} value={job.id}>
                       {job.title} // {job.company}
@@ -157,7 +164,7 @@ function InterviewSchedule() {
               </div>
               
               <button type="submit" className="btn-initiate" disabled={!selectedJob}>
-                INITIATE PROTOCOL
+                START INTERVIEW
               </button>
             </form>
           </motion.div>
@@ -174,8 +181,8 @@ function InterviewSchedule() {
                   <div className="ai-core"></div>
                 </div>
                 <div className="ai-info">
-                  <h3>Aicruit Autonomous Assessor</h3>
-                  <span className="status-text blink">Live Neural Connection Active</span>
+                  <h3>AI Hiring Assistant</h3>
+                  <span className="status-text blink">Interview in Progress</span>
                 </div>
               </div>
               {screeningComplete && (
@@ -217,7 +224,7 @@ function InterviewSchedule() {
                   type="text" 
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder={screeningComplete ? "Session Terminated." : "Transmit response..."}
+                  placeholder={screeningComplete ? "Interview Finished." : "Type your answer..."}
                   disabled={isTyping || screeningComplete || currentStep === INTERVIEW_SCRIPT.length}
                 />
                 <button 

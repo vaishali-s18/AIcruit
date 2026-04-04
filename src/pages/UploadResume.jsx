@@ -240,8 +240,9 @@ function UploadResume() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            Find Your Next <span className="gradient-text">Career Milestone</span>
+            Find Your Next <span className="gradient-text">Dream Job</span>
           </motion.h1>
+
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -274,8 +275,9 @@ function UploadResume() {
             <div className="step-connector"></div>
             <div className={`step-node ${currentStep >= 3 ? 'active' : ''} ${currentStep > 3 ? 'done' : ''}`}>
               <div className="node-circle">3</div>
-              <span>Matching</span>
+              <span>Find Jobs</span>
             </div>
+
           </motion.div>
 
           <form onSubmit={handleSubmit} className="upload-interactive-form">
@@ -366,8 +368,9 @@ function UploadResume() {
               >
                 <h2>
                   <span className="section-icon">👤</span>
-                  Confirm Your Details
+                  Personal Information
                 </h2>
+
                 <p className="section-description">
                   We've pre-filled some details from your resume. Please verify or update them.
                 </p>
@@ -456,8 +459,9 @@ function UploadResume() {
                   Select Job Position
                 </h2>
                 <p className="section-description">
-                  Choose a job for a deep-dive match, or skip for a general analysis.
+                  Choose a job to see how well you match.
                 </p>
+
 
                 <div className={`form-group ${formErrors.job ? 'error' : ''}`}>
                   <label>Job Position *</label>
@@ -512,7 +516,7 @@ function UploadResume() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    {loading ? "Processing..." : "Final Scan & Match →"}
+                    {loading ? "Processing..." : "Find My Matches →"}
                   </motion.button>
                 </div>
 
@@ -616,8 +620,8 @@ function UploadResume() {
           </div>
           <div className="feature-card">
             <div className="feature-icon">🎯</div>
-            <h3>Strategic Targeting</h3>
-            <p>We only show you roles that match your career trajectory and skill level.</p>
+            <h3>Smart Job Matching</h3>
+            <p>We only show you roles that match your career level and experience.</p>
           </div>
         </section>
 
@@ -648,7 +652,7 @@ function UploadResume() {
           <div className="privacy-bar">
             <span className="privacy-icon">🔒</span>
             <p>Your privacy is our priority. Your data is encrypted and never shared without explicit consent. 
-              <a href="#"> Learn more about our privacy protocols.</a>
+              <a href="#"> Learn more about our privacy policy.</a>
             </p>
           </div>
         </footer>

@@ -176,7 +176,7 @@ function Recommendations() {
           )}
         </section>
 
-        {/* Main Neural Results Area */}
+        {/* Recommended Jobs */}
         <div className="results-toolbar-minimal">
            <h2 className="toolbar-title">Recommended Jobs</h2>
            <div className="toolbar-filters">
@@ -216,7 +216,7 @@ function Recommendations() {
 
                   <div className="match-metrics-row">
                     <div className="metric-item">
-                      <span className="m-label">Market Fit</span>
+                      <span className="m-label">Suitability</span>
                       <span className="m-value">{job.matchScore > 80 ? "High Compatibility" : "Relevant Skills"}</span>
                     </div>
                     <div className="metric-item">
@@ -226,7 +226,7 @@ function Recommendations() {
                   </div>
 
                   <div className="match-reasoning-area">
-                    <p className="reasoning-label">Match Insight</p>
+                    <p className="reasoning-label">Why it matches</p>
                     <p className="reasoning-text">
                        Your expertise in <strong>{job.matchedSkills[0] || "core development"}</strong> aligns perfectly with {job.company}'s engineering tech stack.
                     </p>

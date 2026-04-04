@@ -14,15 +14,24 @@
 .jobs-page-minimal {
   min-height: 100vh;
   background-color: var(--bg-deep);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.1) 0px, transparent 50%);
   color: var(--text-primary);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  padding-bottom: 5rem;
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  padding-top: 140px; /* Resolves Navbar Overlap */
+  padding-bottom: 8rem;
   position: relative;
   overflow-x: hidden;
 }
+
+.matrix-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 
 .page-header-bg {
   position: absolute;
@@ -43,28 +52,66 @@
 
 /* Hero Section */
 .jobs-hero-section {
-  padding: 80px 0 40px;
+  padding: 40px 0 60px;
   text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hud-status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(14, 165, 233, 0.05);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  border-radius: 99px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+.status-pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-primary);
+  animation: hud-pulse 2s infinite;
+}
+
+@keyframes hud-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
 }
 
 .jobs-hero-section h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
+  font-size: 4rem;
+  font-weight: 900;
   color: white;
-  margin-bottom: 1rem;
-  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .blue-accent {
-  color: var(--accent-primary);
-  text-shadow: 0 0 15px var(--accent-glow);
+  background: linear-gradient(to right, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));
 }
 
 .hero-subtitle-text {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   color: var(--text-secondary);
-  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin: 0 auto 3.5rem;
+  line-height: 1.6;
 }
+
 
 .search-focus-area {
   max-width: 800px;
