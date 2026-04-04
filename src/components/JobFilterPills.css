@@ -1,0 +1,105 @@
+/* JobFilterPills.css - Professional Dark Neon Filters */
+
+.filter-pills-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--bg-card); /* Glassmorphic Dark Primary */
+  backdrop-filter: blur(30px);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Search Bar */
+.search-mini-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem 1.6rem;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-mini-bar:focus-within {
+  background: rgba(0, 0, 0, 0.45);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.search-icon {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+.search-mini-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 1.05rem;
+  color: white;
+  font-weight: 500;
+  outline: none;
+}
+
+.search-mini-bar input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* Category Pills */
+.pills-container {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-pill {
+  padding: 0.6rem 1.45rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--accent-primary);
+  background: rgba(14, 165, 233, 0.06);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--accent-glow);
+}
+
+.filter-pill.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+@media (min-width: 1024px) {
+  .filter-pills-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-pills-bar {
+    padding: 1.5rem;
+  }
+  .filter-pill {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.8rem;
+  }
+}

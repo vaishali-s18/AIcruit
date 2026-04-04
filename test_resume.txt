@@ -1,0 +1,15 @@
+John Doe
+Email: test@test.com
+Phone: 123-456-7890
+
+Summary:
+Full stack developer with 8 years of experience.
+
+Skills:
+React, Node.js, MongoDB, Javascript, Python, AWS.
+
+Experience:
+Senior Developer, SpaceX (2016-Present)
+Full stack development and DevOps.
+- Built mission critical systems with React and Node.js.
+- Deployed to AWS with Docker and Kubernetes.

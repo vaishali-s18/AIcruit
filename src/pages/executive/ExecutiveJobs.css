@@ -1,0 +1,209 @@
+/* ExecutiveJobs.css - Premium Job Inventory */
+
+:root {
+  --exec-bg: #020617;
+  --exec-card-bg: rgba(15, 23, 42, 0.6);
+  --exec-accent-cyan: #0ea5e9;
+  --exec-accent-indigo: #6366f1;
+  --exec-accent-teal: #0d9488;
+  --exec-accent-warning: #f59e0b;
+  --exec-accent-danger: #f43f5e;
+  --exec-text-main: #f8fafc;
+  --exec-text-muted: #94a3b8;
+  --exec-border: rgba(255, 255, 255, 0.08);
+}
+
+.executive-jobs-professional {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--exec-bg);
+}
+
+.jobs-inventory-panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.inventory-table-wrapper {
+  overflow-x: auto;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th {
+  text-align: left;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--exec-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--exec-border);
+}
+
+.inventory-table td {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+
+.inventory-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Job Info Cell */
+.job-info-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.job-title-text {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.job-meta-text {
+  font-size: 0.85rem;
+  color: var(--exec-text-muted);
+}
+
+/* Applicants Badge */
+.applicants-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: var(--exec-accent-cyan);
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+/* Match Score Visual */
+.match-score-visual {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 140px;
+}
+
+.mini-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--exec-accent-indigo), var(--exec-accent-cyan));
+  border-radius: 100px;
+}
+
+.score-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--exec-accent-cyan);
+}
+
+/* Status Pill */
+.status-pill {
+  padding: 0.4rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+.status-pill.active {
+  background: rgba(13, 148, 136, 0.1);
+  color: var(--exec-accent-teal);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+.status-pill.in-review {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--exec-accent-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-pill.closed {
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--exec-accent-danger);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+/* Action Group */
+.action-button-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-review-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--exec-border);
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-review-link:hover {
+  background: var(--exec-accent-cyan);
+  border-color: var(--exec-accent-cyan);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.btn-icon-util {
+  background: transparent;
+  border: 1px solid var(--exec-border);
+  color: var(--exec-text-muted);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-icon-util:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-color: var(--exec-accent-cyan);
+}
+
+.btn-icon-util.danger:hover {
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--exec-accent-danger);
+  border-color: var(--exec-accent-danger);
+}
+
+@media (max-width: 1000px) {
+  .col-match, .col-date {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .col-status {
+    display: none;
+  }
+}

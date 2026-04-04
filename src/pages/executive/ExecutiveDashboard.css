@@ -1,0 +1,331 @@
+/* ExecutiveDashboard.css - Premium Professional Recruitment Hub */
+
+:root {
+  --exec-bg: #020617;
+  --exec-card-bg: rgba(15, 23, 42, 0.6);
+  --exec-accent-cyan: #0ea5e9;
+  --exec-accent-indigo: #6366f1;
+  --exec-accent-teal: #0d9488;
+  --exec-text-main: #f8fafc;
+  --exec-text-muted: #94a3b8;
+  --exec-border: rgba(255, 255, 255, 0.08);
+}
+
+.executive-dashboard-professional {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--exec-bg);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--exec-text-main);
+}
+
+.executive-main-content {
+  flex: 1;
+  padding: 3rem 4rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+/* Professional Header */
+.executive-header-clean {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--exec-border);
+}
+
+.header-badge-professional {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: var(--exec-accent-cyan);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.header-titles-block h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.highlight-color {
+  color: var(--exec-accent-cyan);
+}
+
+.dashboard-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--exec-text-muted);
+}
+
+.status-indicator-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--exec-accent-teal);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(13, 148, 136, 0.6);
+}
+
+.status-ready {
+  color: var(--exec-accent-teal);
+  font-weight: 700;
+}
+
+.btn-primary-glow {
+  background: var(--exec-accent-cyan);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+}
+
+.btn-primary-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
+}
+
+/* Stats Board */
+.dashboard-stats-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+/* Glass Panels */
+.glass-panel {
+  background: var(--exec-card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1px solid var(--exec-border);
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.panel-header-clean {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.panel-header-clean h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.count-label {
+  font-size: 0.75rem;
+  color: var(--exec-accent-cyan);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Main Grid Layout */
+.dashboard-content-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Timeline Activity Stream */
+.activity-timeline-stream {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-connector {
+  position: absolute;
+  left: -15px;
+  top: 1.5rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--exec-border);
+}
+
+.timeline-item:last-child .timeline-connector {
+  display: none;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -19px;
+  top: 0.5rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--exec-bg);
+  border: 2px solid var(--exec-accent-indigo);
+  z-index: 2;
+}
+
+.timeline-content-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--exec-border);
+  padding: 1.25rem;
+  border-radius: 16px;
+  transition: all 0.2s;
+}
+
+.timeline-content-box:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateX(4px);
+}
+
+.timeline-top-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.actor-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.timestamp {
+  font-size: 0.8rem;
+  color: var(--exec-text-muted);
+}
+
+.activity-desc {
+  font-size: 0.9rem;
+  color: var(--exec-text-muted);
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.activity-type-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--exec-accent-indigo);
+  letter-spacing: 0.05em;
+}
+
+/* Priority Talent Listing */
+.talent-listing-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.candidate-list-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid var(--exec-border);
+  transition: all 0.2s;
+}
+
+.candidate-list-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.candidate-avatar-frame {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.candidate-avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.candidate-core-meta {
+  flex: 1;
+}
+
+.name-text {
+  display: block;
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.role-text {
+  font-size: 0.8rem;
+  color: var(--exec-text-muted);
+}
+
+.match-visual-logic {
+  width: 110px;
+  text-align: right;
+}
+
+.match-progress-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.match-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--exec-accent-indigo), var(--exec-accent-cyan));
+  border-radius: 100px;
+}
+
+.match-percent {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--exec-accent-cyan);
+}
+
+@media (max-width: 1200px) {
+  .dashboard-content-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .executive-main-content {
+    padding: 2rem 1.5rem;
+  }
+  .executive-header-clean {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}

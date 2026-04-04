@@ -1,0 +1,161 @@
+.executive-sidebar {
+  width: 260px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px); /* 80px is Navbar height */
+  position: sticky;
+  top: 80px;
+  overflow-y: auto;
+  transition: var(--transition-normal);
+}
+
+.sidebar-header {
+  padding: 30px 24px;
+}
+
+.recruiter-badge {
+  background: var(--primary-gradient);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-neon);
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  color: var(--text-body);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.sidebar-link:hover {
+  background: var(--bg-secondary);
+  color: var(--text-heading);
+}
+
+.sidebar-link.active {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--primary-purple);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.sidebar-icon {
+  margin-right: 14px;
+  font-size: 1.25rem;
+}
+
+.sidebar-label {
+  flex: 1;
+}
+
+.sidebar-footer {
+  padding: 24px;
+  border-top: 1px solid var(--border-color);
+}
+
+.sidebar-help {
+  background: var(--bg-secondary);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.sidebar-help p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}
+
+.sidebar-help a {
+  color: var(--primary-cyan);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.sidebar-help a:hover {
+  color: var(--primary-blue);
+}
+
+/* Responsiveness */
+/* Mobile Specific Sidebar Styling */
+.sidebar-toggle-btn {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1002;
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  box-shadow: 0 10px 30px var(--primary-glow);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar-toggle-btn.active {
+  background: var(--bg-surface);
+  color: #fff;
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .executive-sidebar {
+    position: fixed;
+    top: 0; left: -280px;
+    width: 280px; height: 100vh;
+    z-index: 1001;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(40px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .executive-sidebar.mobile-open {
+    left: 0;
+  }
+
+  .sidebar-header {
+    padding: 40px 24px 20px;
+  }
+}
+

@@ -1,0 +1,433 @@
+.resume-scan-premium {
+  min-height: 100vh;
+  padding-top: 100px;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 8rem;
+}
+
+.scan-noise-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.scan-header-luxe {
+  text-align: center;
+  margin-bottom: 5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.scan-badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-cyan);
+  margin-bottom: 2rem;
+}
+
+.scan-header-luxe h1 {
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.text-glow {
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.scan-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.highlight-job {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.scan-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard-card {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.card-header svg {
+  color: var(--accent-cyan);
+  width: 24px; height: 24px;
+}
+
+.card-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Quantum Gauge */
+.quantum-gauge-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+}
+
+.gauge-svg {
+  width: 100%; height: 100%;
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 12;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: var(--accent-cyan);
+  stroke-width: 12;
+  stroke-linecap: round;
+  filter: url(#glow);
+}
+
+.gauge-content {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.score-primary {
+  display: block;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-cyan);
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.match-status-pill {
+  margin-top: 3rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 99px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #22c55e;
+  text-align: center;
+}
+
+/* Identity Vector */
+.identity-data-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: auto;
+}
+
+.identity-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.identity-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+.identity-row svg {
+  color: var(--accent-cyan);
+  opacity: 0.7;
+}
+
+.data-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-meta .label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.data-meta .value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.file-dna-badge {
+  margin-top: 3rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  display: flex;
+  gap: 0.5rem;
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+
+.dna-label { color: var(--text-secondary); }
+.dna-value { color: var(--accent-cyan); word-break: break-all; }
+
+/* Skill Matrix */
+.skill-matrix {
+  grid-column: span 2;
+}
+
+.skill-group-luxe {
+  margin-bottom: 3.5rem;
+}
+
+.skill-group-luxe:last-child { margin-bottom: 0; }
+
+.group-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent-cyan);
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+.skill-node-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.skill-node-luxe {
+  padding: 0.8rem 1.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.skill-node-luxe.matched {
+  border-color: rgba(6, 182, 212, 0.2);
+}
+
+.skill-node-luxe.matched .node-status { color: var(--accent-cyan); }
+
+.skill-node-luxe.missing {
+  opacity: 0.6;
+  border-color: rgba(239, 68, 68, 0.1);
+}
+
+.skill-node-luxe.missing .node-status { color: #ef4444; }
+
+.skill-node-luxe:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Command Bar */
+.action-command-bar {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.loading-protocol {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-deep);
+  color: var(--accent-cyan);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .scan-dashboard-grid { grid-template-columns: 1fr; }
+  .skill-matrix { grid-column: span 1; }
+  .action-command-bar { grid-column: span 1; flex-direction: column; }
+  .scan-header-luxe h1 { font-size: 3rem; }
+}
+
+/* Strategic Non-Alignment Alert Styles */
+.mismatch-alert-active {
+  background-color: #0c0205 !important;
+}
+
+.alert-radial-glow {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% 0%, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.scan-badge.alert {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+
+.text-glow-red {
+  color: #ef4444;
+  text-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+}
+
+.highlight-alert {
+  color: #fca5a5;
+  font-weight: 800;
+}
+
+.alert-border {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.mismatch-node-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.mismatch-pulse-node {
+  width: 100px; height: 100px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 4px solid #ef4444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
+}
+
+.mismatch-pulse-node::after {
+  content: '';
+  position: absolute;
+  inset: -15px;
+  border: 1px solid #ef4444;
+  border-radius: 50%;
+  animation: alert-pulse 2s infinite;
+}
+
+@keyframes alert-pulse {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.mismatch-x {
+  font-size: 3rem;
+  color: #ef4444;
+  font-weight: 900;
+}
+
+.mismatch-score {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mismatch-score .score-val {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #ef4444;
+}
+
+.mismatch-score .score-lbl {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  letter-spacing: 0.2rem;
+}
+
+.mismatch-reason {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+.required-matrix-header {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fca5a5;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.btn-premium.alert-btn {
+  background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 100%);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+}
+
+.btn-premium.alert-btn:hover {
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.5);
+}
+

@@ -1,0 +1,72 @@
+.stat-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all var(--transition-normal);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  border-color: var(--primary-purple);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-glass);
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, var(--primary-purple) 0%, transparent 70%);
+  opacity: 0.05;
+  filter: blur(20px);
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-icon-wrapper {
+  background: var(--bg-secondary);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
+}
+
+.trend-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.trend-badge.up {
+  color: var(--success-color);
+  background: var(--success-bg);
+}
+
+.trend-badge.down {
+  color: var(--danger-color);
+  background: var(--danger-bg);
+}
+
+.stat-body h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 4px;
+}
+
+.stat-body p {
+  color: var(--text-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+}

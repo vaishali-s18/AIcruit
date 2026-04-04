@@ -1,0 +1,206 @@
+/* ExecutiveAnalytics.css - Premium Recruitment Insights */
+
+:root {
+  --exec-bg: #020617;
+  --exec-card-bg: rgba(15, 23, 42, 0.6);
+  --exec-accent-cyan: #0ea5e9;
+  --exec-accent-blue: #3b82f6;
+  --exec-accent-purple: #8b5cf6;
+  --exec-accent-teal: #0d9488;
+  --exec-text-main: #f8fafc;
+  --exec-text-muted: #94a3b8;
+  --exec-border: rgba(255, 255, 255, 0.08);
+}
+
+.analytics-header-clean {
+  margin-bottom: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--exec-border);
+}
+
+.header-badge-professional {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: var(--exec-accent-cyan);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.analytics-titles-block h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.highlight-color {
+  color: var(--exec-accent-cyan);
+}
+
+.subtitle {
+  font-size: 1.15rem;
+  color: var(--exec-text-muted);
+  max-width: 700px;
+}
+
+.analytics-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+/* Content Grid */
+.analytics-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.analytics-card {
+  padding: 2.5rem;
+}
+
+.panel-header-clean {
+  margin-bottom: 2.5rem;
+}
+
+.panel-header-clean h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.panel-subtitle {
+  font-size: 0.95rem;
+  color: var(--exec-text-muted);
+}
+
+/* Match Distribution Chart */
+.chart-container-luxe {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.bar-label {
+  width: 90px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--exec-text-muted);
+}
+
+.bar-wrapper {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.distribution-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.2);
+}
+
+.bar-value {
+  width: 40px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: right;
+}
+
+/* Recruitment Funnel */
+.funnel-container-luxe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.funnel-stage {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.funnel-step {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #fff;
+  position: relative;
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 4rem;
+}
+
+.funnel-step:hover {
+  transform: scale(1.02);
+  filter: brightness(1.2);
+  cursor: pointer;
+}
+
+.funnel-step span {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Funnel Variations */
+.f1 { 
+  width: 100%; 
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.1));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.f2 { 
+  width: 85%; 
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.2), rgba(14, 165, 233, 0.1));
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+.f3 { 
+  width: 70%; 
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+.f4 { 
+  width: 55%; 
+  background: linear-gradient(180deg, rgba(13, 148, 136, 0.2), rgba(13, 148, 136, 0.1));
+  border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+@media (max-width: 1100px) {
+  .analytics-content-grid {
+    grid-template-columns: 1fr;
+  }
+  .analytics-titles-block h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .funnel-step {
+    padding: 0 1rem;
+    font-size: 0.8rem;
+  }
+}
