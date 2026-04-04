@@ -1,15 +1,61 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import CandidateProfileHeader from './CandidateProfileHeader';
 import './CandidateResumeModal.css';
 
-const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
+const CandidateResumeModal = ({ candidate, isOpen, onClose, onStatusChange }) => {
+  const resumeRef = useRef(null);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
   if (!isOpen || !candidate) return null;
+
+  const handleDownloadPDF = async () => {
+    if (!resumeRef.current) return;
+    
+    try {
+      setIsGeneratingPDF(true);
+      
+      // Temporarily hide the close button during capture
+      const closeBtn = document.querySelector('.close-resume-btn');
+      if (closeBtn) closeBtn.style.display = 'none';
+
+      // Capture the styled DOM node as an image
+      const canvas = await html2canvas(resumeRef.current, {
+        scale: 2, // Higher scale for better resolution
+        useCORS: true, 
+        backgroundColor: '#020617', // Match the dark theme background
+      });
+
+      // Restore the close button
+      if (closeBtn) closeBtn.style.display = 'block';
+
+      const imgData = canvas.toDataURL('image/png');
+      
+      // Calculate PDF dimensions (A4 format)
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      
+      // Trigger automatic direct download
+      pdf.save(`${candidate.name.replace(/\s+/g, '_')}_CV.pdf`);
+      
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
 
   return (
     <AnimatePresence>
       <div className="resume-modal-overlay" onClick={onClose}>
         <motion.div 
           className="resume-modal-content glass-card-luxe"
+          ref={resumeRef}
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -17,43 +63,38 @@ const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
         >
           <button className="close-resume-btn" onClick={onClose}>✕</button>
           
-          <CandidateProfileHeader candidate={candidate} />
+          <CandidateProfileHeader 
+            candidate={candidate} 
+            onDownload={handleDownloadPDF} 
+            isDownloading={isGeneratingPDF} 
+          />
 
-          <div className="resume-layout-luxe">
-            <aside className="resume-sidebar-luxe">
-               <div className="resume-contact-luxe">
-                 <h3>Contact Integrity</h3>
-                 <p>📧 {candidate.name.toLowerCase().replace(' ', '.')}@talent.hub</p>
-                 <p>📱 +1 (555) 012-9482</p>
-                 <p>📍 {candidate.location || 'Remote, Global'}</p>
-               </div>
-               <div className="resume-skills-luxe">
-                 <h3>AI-Extracted Skills</h3>
-                 <div className="skill-cloud-luxe">
-                   {candidate.skills.map(skill => (
-                     <span key={skill} className="skill-tag-luxe active">{skill}</span>
-                   ))}
-                 </div>
-               </div>
+          <div className="resume-layout-centralized">
+            <main className="resume-main-centered">
+              {/* Quick Info Ribbon */}
+              <div className="resume-ribbon-centered">
+                <div className="ribbon-item">
+                  <span className="label">Match Score</span>
+                  <span className="value highlight">{candidate.matchScore}%</span>
+                </div>
+                <div className="ribbon-item">
+                  <span className="label">Location</span>
+                  <span className="value">{candidate.location || 'Remote'}</span>
+                </div>
+                <div className="ribbon-item">
+                  <span className="label">Contact</span>
+                  <span className="value">📧 {candidate.name.toLowerCase().replace(' ', '.')}@talent.hub</span>
+                </div>
+              </div>
 
-               <div className="match-analysis-luxe">
-                  <h3>AI Calibration</h3>
-                  <div className="match-score-pill">
-                    <span className="score">{candidate.matchScore}%</span>
-                    <span className="label">System Match</span>
-                  </div>
-               </div>
-            </aside>
-
-            <main className="resume-main-luxe">
-              <section className="resume-section-luxe">
+              <section className="resume-section-centered">
                 <div className="ai-summary-box-luxe">
                   <div className="ai-badge-luxe">AI STRATEGIC SUMMARY</div>
                   <p>{candidate.summary}</p>
                 </div>
               </section>
 
-              <section className="resume-section-luxe">
+              <section className="resume-section-centered">
                 <h2>Strategic Experience</h2>
                 <div className="experience-timeline-luxe">
                    <div className="exp-item-luxe">
@@ -89,7 +130,16 @@ const CandidateResumeModal = ({ candidate, isOpen, onClose }) => {
                 </div>
               </section>
 
-              <section className="resume-section-luxe">
+              <section className="resume-section-centered">
+                <h2>Core Expertise</h2>
+                <div className="skill-cloud-centralized">
+                  {candidate.skills.map(skill => (
+                    <span key={skill} className="skill-tag-luxe active">{skill}</span>
+                  ))}
+                </div>
+              </section>
+
+              <section className="resume-section-centered">
                 <h2>Scholastic Integrity</h2>
                 <div className="edu-item-luxe">
                    <h3>M.S. in Neural Computation</h3>
