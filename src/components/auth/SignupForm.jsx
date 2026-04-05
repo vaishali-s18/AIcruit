@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { authService } from '../../services/auth';
+import { useAuth } from '../../context/AuthContext';
 import '../../pages/Auth.css';
 
 function SignupForm({ onSuccess, onSwitch }) {
@@ -10,13 +10,14 @@ function SignupForm({ onSuccess, onSwitch }) {
   const [role, setRole] = useState('candidate');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { signup } = useAuth();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     
-    const result = await authService.signup(name, email, password, role);
+    const result = await signup(name, email, password, role);
     
     if (result.success) {
       if (onSuccess) onSuccess(result.user);

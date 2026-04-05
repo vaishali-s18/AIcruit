@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { authService } from '../../services/auth';
+import { useAuth } from '../../context/AuthContext';
 import '../../pages/Auth.css';
 
 function LoginForm({ onSuccess, onSwitch }) {
@@ -8,13 +8,14 @@ function LoginForm({ onSuccess, onSwitch }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     
-    const result = await authService.login(email, password);
+    const result = await login(email, password);
     
     if (result.success) {
       if (onSuccess) onSuccess(result.user);

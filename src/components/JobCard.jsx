@@ -57,12 +57,12 @@ function JobCard({ job }) {
       </div>
 
       <footer className="card-footer-actions">
-          <Link to={`/job/${job._id || job.id}`} className="apply-btn-primary">
+          <Link to={`/job/${job._id || job.id}`} className="apply-btn-primary" onClick={(e) => e.stopPropagation()}>
              Apply Now
           </Link>
           <button 
             className={`save-btn-minimal ${isSaved ? 'saved' : ''}`}
-            onClick={(e) => { e.preventDefault(); setIsSaved(!isSaved); }}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsSaved(!isSaved); }}
             title={isSaved ? "Saved" : "Save Job"}
           >
             {isSaved ? "🔖" : "📑"}

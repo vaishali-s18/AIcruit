@@ -10,6 +10,13 @@
   --bg-surface: rgba(15, 23, 42, 0.4); /* Translucent Slate 900 */
   --bg-secondary: rgba(30, 41, 59, 0.5); /* Translucent Slate 800 */
 
+  /* Legacy & Subpage Aliases */
+  --bg-deep: var(--bg-main);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-cyan: #06b6d4;
+  --accent-primary: #3b82f6;
+
   /* Gradients & Accents */
   --primary-blue: #3b82f6;      /* Blue 500 */
   --primary-purple: #8b5cf6;    /* Violet 500 */

@@ -35,6 +35,14 @@ export const AuthProvider = ({ children }) => {
     return result;
   };
 
+  const signup = async (name, email, password, role) => {
+    const result = await authService.signup(name, email, password, role);
+    if (result.success) {
+      setUser(result.user);
+    }
+    return result;
+  };
+
   const logout = () => {
     authService.logout();
     setUser(null);
@@ -67,7 +75,8 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{ 
       user, 
       loading, 
-      login, 
+      login,
+      signup,
       logout, 
       updateProfile,
       isAuthModalOpen,

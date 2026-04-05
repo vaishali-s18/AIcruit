@@ -11,6 +11,7 @@ function Jobs() {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('grid');
+  const [filters, setFilters] = useState({ keyword: '', type: '', location: '' });
   const [activeTab, setActiveTab] = useState('All');
 
   const trendingTags = ['React', 'Node.js', 'Python', 'DevOps', 'UI/UX', 'Remote'];
@@ -33,22 +34,36 @@ function Jobs() {
   }, []);
 
   const handleFilterChange = (name, value) => {
+    const newFilters = { ...filters, [name]: value };
+    setFilters(newFilters);
+    
     let result = [...jobs];
-    if (name === 'keyword' && value.trim() !== '') {
-      const lower = value.toLowerCase();
+    
+    if (newFilters.keyword.trim() !== '') {
+      const lower = newFilters.keyword.toLowerCase();
       result = result.filter(job => 
         job.title.toLowerCase().includes(lower) || 
         job.company.toLowerCase().includes(lower) ||
-        job.location.toLowerCase().includes(lower)
+        job.location.toLowerCase().includes(lower) ||
+        job.category?.toLowerCase().includes(lower) ||
+        (job.requirements?.skills && job.requirements.skills.some(s => s.toLowerCase().includes(lower)))
       );
-    } else if (name === 'type' && value !== '') {
+    } 
+    
+    if (newFilters.type !== '') {
+      const lower = newFilters.type.toLowerCase();
       result = result.filter(job => 
-        (job.category && job.category.toLowerCase() === value.toLowerCase()) ||
-        job.type.toLowerCase().includes(value.toLowerCase().replace('-', ' '))
+        job.category?.toLowerCase() === lower ||
+        job.title?.toLowerCase().includes(lower) ||
+        (job.requirements?.skills && job.requirements.skills.some(s => s.toLowerCase().includes(lower))) ||
+        job.type?.toLowerCase().includes(lower.replace('-', ' '))
       );
-    } else if (name === 'location' && value !== '') {
-      result = result.filter(job => job.location.toLowerCase().includes(value.toLowerCase()));
     }
+    
+    if (newFilters.location !== '') {
+      result = result.filter(job => job.location.toLowerCase().includes(newFilters.location.toLowerCase()));
+    }
+    
     setFilteredJobs(result);
   };
 

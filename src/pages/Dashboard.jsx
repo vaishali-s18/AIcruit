@@ -232,9 +232,14 @@ function Dashboard() {
           </div>
           <motion.div className="recommended-jobs-grid" variants={staggerContainer}>
             {matchedJobs.map((job) => (
-              <Link to={`/job/${job._id || job.id}`} className="job-link" key={job._id || job.id}>
+              <div 
+                onClick={() => navigate(`/job/${job._id || job.id}`)} 
+                className="job-link" 
+                key={job._id || job.id}
+                style={{ cursor: 'pointer' }}
+              >
                 <JobCard job={job} />
-              </Link>
+              </div>
             ))}
           </motion.div>
         </motion.section>
