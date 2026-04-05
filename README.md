@@ -40,6 +40,7 @@ npm run dev
 👉 Open in browser:
 
 http://localhost:5173
+
 💡 Objective
 
 The goal of Aicruit is to simplify recruitment by reducing manual processes and providing a seamless experience for both recruiters and candidates. It demonstrates practical implementation of modern frontend development with scalable architecture.
