@@ -30,10 +30,13 @@ Storage: LocalStorage
 🚀 Getting Started
 1️⃣ Clone the repository
 git clone https://github.com/your-username/aicruit.git
+
 2️⃣ Navigate to project folder
 cd aicruit
+
 3️⃣ Install dependencies
 npm install
+
 4️⃣ Run the development server
 npm run dev
 
@@ -53,8 +56,4 @@ Real-time chat between recruiter and candidate
 Analytics dashboard
 👩‍💻 Author
 
-Vaishali Bakshi
-
-⭐ Contribution
-
-Contributions, issues, and feature requests are welcome!
+Vaishali 
