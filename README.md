@@ -55,6 +55,7 @@ Job recommendation system
 Backend integration (Node.js / Firebase)
 Real-time chat between recruiter and candidate
 Analytics dashboard
+
 👩‍💻 Author
 
 Vaishali 
