@@ -1,21 +1,67 @@
-<<<<<<< HEAD
-# React + Vite
+Aicruit is a modern, web-based recruitment platform built using React.js, designed to streamline the hiring process for both recruiters and job seekers. It provides a clean, scalable, and user-friendly interface to manage job postings, applications, and candidate interactions efficiently.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📌 Features
+🔐 User Authentication
+Secure login and signup for recruiters and candidates
+Role-based access control
+👨‍💼 Recruiter Dashboard
+Create and manage job postings
+View and filter candidate applications
+Access recruiter profile and settings
+👩‍💻 Candidate Portal
+Browse and search job opportunities
+Apply for jobs easily
+Track application status
+🤖 AI Features
+Resume scanning and analysis
+Smart job matching (planned/enhanced)
+🔍 Search & Filtering
+Filter jobs and candidates based on skills, roles, and categories
+🎨 Modern UI
+Responsive design
+Clean dark-themed interface
+Smooth navigation and layout
+🛠️ Tech Stack
+Frontend: React.js, JavaScript (ES6), HTML, CSS
+Routing: React Router DOM
+State Management: Context API / Local State
+Storage: LocalStorage
+📂 Project Structure
+src/
+│── components/
+│── pages/
+│── assets/
+│── hooks/
+│── lib/
+│── App.jsx
+│── index.css
+🚀 Getting Started
+1️⃣ Clone the repository
+git clone https://github.com/your-username/aicruit.git
+2️⃣ Navigate to project folder
+cd aicruit
+3️⃣ Install dependencies
+npm install
+4️⃣ Run the development server
+npm run dev
 
-Currently, two official plugins are available:
+👉 Open in browser:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+http://localhost:5173
+💡 Objective
 
-## React Compiler
+The goal of Aicruit is to simplify recruitment by reducing manual processes and providing a seamless experience for both recruiters and candidates. It demonstrates practical implementation of modern frontend development with scalable architecture.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+📌 Future Enhancements
+AI-based resume screening
+Job recommendation system
+Backend integration (Node.js / Firebase)
+Real-time chat between recruiter and candidate
+Analytics dashboard
+👩‍💻 Author
 
-## Expanding the ESLint configuration
+Vaishali Bakshi
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# AIcruit
-Aicruit is a React-based recruitment management system designed to streamline hiring for recruiters and job seekers. It features role-based access, job posting, application tracking, and advanced search. Built with a modular architecture, it ensures scalability, efficiency, and a seamless user experience.
->>>>>>> 38d0cb503d4c0235805d195695c54a8c310d6d1b
+⭐ Contribution
+
+Contributions, issues, and feature requests are welcome!
