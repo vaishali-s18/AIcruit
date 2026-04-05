@@ -28,6 +28,7 @@ State Management: Context API / Local State
 Storage: LocalStorage
 
 🚀 Getting Started
+
 1️⃣ Clone the repository
 git clone https://github.com/your-username/aicruit.git
 
