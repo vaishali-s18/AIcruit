@@ -26,15 +26,7 @@ Frontend: React.js, JavaScript (ES6), HTML, CSS
 Routing: React Router DOM
 State Management: Context API / Local State
 Storage: LocalStorage
-📂 Project Structure
-src/
-│── components/
-│── pages/
-│── assets/
-│── hooks/
-│── lib/
-│── App.jsx
-│── index.css
+
 🚀 Getting Started
 1️⃣ Clone the repository
 git clone https://github.com/your-username/aicruit.git
