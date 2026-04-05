@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { jobs } from '../data/jobs';
+import axios from 'axios';
+import { jobs as backupJobs } from '../data/jobs';
 import './Recommendations.css';
 
 // Custom SVG Match Ring Component
@@ -40,6 +41,7 @@ const MatchRing = ({ score, color }) => {
 function Recommendations() {
   const navigate = useNavigate();
   const [userSkills, setUserSkills] = useState([]);
+  const [liveJobs, setLiveJobs] = useState([]);
   const [recommendedJobs, setRecommendedJobs] = useState([]);
   const [skillInput, setSkillInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -50,41 +52,65 @@ function Recommendations() {
     'Docker', 'Kubernetes', 'TypeScript', 'Tailwind', 'API'
   ];
 
+  // Fetch live jobs from the API to ensures data consistency
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const { data } = await axios.get('/api/jobs');
+        setLiveJobs(data);
+      } catch (error) {
+        console.warn('Recommendations API Warning: Switching to local matching fallback.');
+        setLiveJobs(backupJobs);
+      }
+    };
+    fetchJobs();
+  }, []);
+
   useEffect(() => {
     const savedSkills = localStorage.getItem('userSkills');
     if (savedSkills) setUserSkills(JSON.parse(savedSkills));
   }, []);
 
+  // Professional Matching Algorithm (Simulated AI Scoring)
   useEffect(() => {
-    if (userSkills.length > 0) {
-      setIsLoading(true);
-      setTimeout(() => {
-        const scored = jobs.map(job => {
-          // Normalize skills for better matching
-          const jobSkills = job.requirements?.skills || [];
-          const matchedSkills = userSkills.filter(userSkill =>
-            jobSkills.some(js => js.toLowerCase().includes(userSkill.toLowerCase()))
-          );
-          
-          const matchPercentage = jobSkills.length > 0
-            ? Math.min(100, Math.round((matchedSkills.length / jobSkills.length) * 100 + 10)) // Slight boost for UI
-            : 0;
-          
-          return {
-            ...job,
-            matchScore: matchPercentage,
-            matchedSkills: matchedSkills,
-            missingSkills: jobSkills.filter(js => 
-              !userSkills.some(us => js.toLowerCase().includes(us.toLowerCase()))
-            )
-          };
-        }).sort((a, b) => b.matchScore - a.matchScore);
-        
-        setRecommendedJobs(scored);
-        setIsLoading(false);
-      }, 800);
+    if (userSkills.length === 0 || liveJobs.length === 0) {
+      setRecommendedJobs([]);
+      return;
     }
-  }, [userSkills]);
+
+    setIsLoading(true);
+    
+    // Simulate complex matching processing time
+    const timer = setTimeout(() => {
+      const scored = liveJobs.map(job => {
+        const jobSkills = job.techStack || job.requirements?.skills || [];
+        const matches = userSkills.filter(skill => 
+          jobSkills.some(js => js.toLowerCase().includes(skill.toLowerCase())) ||
+          job.title.toLowerCase().includes(skill.toLowerCase()) ||
+          (job.description && job.description.toLowerCase().includes(skill.toLowerCase()))
+        ).length;
+
+        // Base match + skill weight
+        let score = 30 + (matches * 15);
+        if (score > 98) score = 98;
+        if (score < 40) score = Math.floor(Math.random() * (55 - 40) + 40);
+
+        return { 
+          ...job, 
+          matchScore: score,
+          matchedSkills: userSkills.filter(us => jobSkills.some(js => js.toLowerCase().includes(us.toLowerCase()))),
+          missingSkills: jobSkills.filter(js => !userSkills.some(us => js.toLowerCase().includes(us.toLowerCase())))
+        };
+      })
+      .sort((a, b) => b.matchScore - a.matchScore)
+      .filter(job => job.matchScore > 45);
+
+      setRecommendedJobs(scored);
+      setIsLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [userSkills, liveJobs]);
 
   const handleAddSkill = (skill) => {
     const freshSkill = typeof skill === 'string' ? skill : skillInput;
@@ -195,7 +221,7 @@ function Recommendations() {
             <AnimatePresence>
               {displayJobs.map((job) => (
                 <motion.article 
-                  key={job.id} 
+                  key={job.id || job._id} 
                   className="recommendation-card"
                   layout
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -221,17 +247,17 @@ function Recommendations() {
                     </div>
                     <div className="metric-item">
                       <span className="m-label">Overlap</span>
-                      <span className="m-value">{job.matchedSkills.length} / {(job.requirements?.skills?.length || 0)} Skills</span>
+                      <span className="m-value">{job.matchedSkills?.length || 0} / {(job.techStack || job.requirements?.skills || []).length} Skills</span>
                     </div>
                   </div>
 
                   <div className="match-reasoning-area">
                     <p className="reasoning-label">Why it matches</p>
                     <p className="reasoning-text">
-                       Your expertise in <strong>{job.matchedSkills[0] || "core development"}</strong> aligns perfectly with {job.company}'s engineering tech stack.
+                       Your expertise in <strong>{job.matchedSkills?.[0] || "core development"}</strong> aligns perfectly with {job.company}'s engineering tech stack.
                     </p>
                     
-                    {job.missingSkills.length > 0 && (
+                    {job.missingSkills?.length > 0 && (
                       <div className="missing-skills-section">
                          <p className="reasoning-label">Missing Skills:</p>
                          <div className="missing-skills-pills">
@@ -244,7 +270,7 @@ function Recommendations() {
                   </div>
 
                   <div className="recommendation-card-footer">
-                    <Link to={`/job/${job.id}`} className="view-details-btn-primary">
+                    <Link to={`/job/${job.id || job._id}`} className="view-details-btn-primary">
                       View Details
                       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                     </Link>

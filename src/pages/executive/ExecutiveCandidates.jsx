@@ -26,19 +26,22 @@ const ExecutiveCandidates = () => {
       const liveApps = JSON.parse(localStorage.getItem('liveApplications') || '[]');
       
       // Format them to match existing Candidates schema
-      const liveCandidates = liveApps.map(app => ({
-        id: app.id,
-        jobId: app.jobId,
-        name: app.candidateName,
-        role: app.role,
-        experience: 'New Applicant', // Not strictly tracked in form yet
-        skills: app.skills,
-        matchScore: app.matchScore,
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(app.candidateName)}&background=0D8ABC&color=fff`,
-        status: 'Active Screened',
-        summary: `Strategic neural analysis complete. Candidate achieved a confidence score of ${app.matchScore}% during autonomous screening.`,
-        transcript: app.transcript,
-      }));
+      const liveCandidates = liveApps.map(app => {
+        const cName = app.candidateName || app.name || 'Unknown Candidate';
+        return {
+          id: app.id,
+          jobId: app.jobId,
+          name: cName,
+          role: app.role || 'Unknown Role',
+          experience: 'New Applicant', 
+          skills: app.skills || [],
+          matchScore: app.matchScore || 0,
+          avatar: app.avatar, // Use provided avatar if exists, else null
+          status: app.status || 'Active Screened',
+          summary: `Strategic neural analysis complete. Candidate achieved a confidence score of ${app.matchScore || 0}% during autonomous screening.`,
+          transcript: app.transcript,
+        };
+      });
 
       // Merge and remove duplicates (if a mock and live conflict, prioritizing live is tough without shared keys, but we'll just prepend live)
       setCandidates([...liveCandidates, ...mockCandidates]);
@@ -59,8 +62,10 @@ const ExecutiveCandidates = () => {
   };
 
   const filteredCandidates = candidates.filter(cand => {
-    const matchesSearch = cand.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         cand.role.toLowerCase().includes(searchTerm.toLowerCase());
+    const safeName = cand.name || '';
+    const safeRole = cand.role || '';
+    const matchesSearch = safeName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         safeRole.toLowerCase().includes(searchTerm.toLowerCase());
     
     if (!matchesSearch) return false;
     if (jobId && cand.jobId !== jobId) return false;

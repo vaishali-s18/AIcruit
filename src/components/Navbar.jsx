@@ -174,14 +174,7 @@ function Navbar({ isAuthPage }) {
                         className="px-4 py-2.5 text-[13px] font-bold text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 rounded-lg transition-all duration-200 flex items-center gap-3 no-underline list-none uppercase tracking-wide group/item"
                         onClick={() => setIsProfileOpen(false)}
                       >
-                        <span className="group-hover/item:scale-125 transition-transform">📊</span> Dashboard
-                      </Link>
-                      <Link 
-                        to="/profile" 
-                        className="px-4 py-2.5 text-[13px] font-bold text-slate-400 hover:text-white hover:bg-[#0ea5e9]/10 rounded-lg transition-all duration-200 flex items-center gap-3 no-underline list-none uppercase tracking-wide group/item"
-                        onClick={() => setIsProfileOpen(false)}
-                      >
-                        <span className="group-hover/item:scale-125 transition-transform">👤</span> Profile
+                        <span className="group-hover/item:scale-125 transition-transform">📊</span> {isRecruiter ? 'Overview' : 'My Dashboard'}
                       </Link>
                       <div className="h-px bg-white/5 my-2 mx-1"></div>
                       <button 

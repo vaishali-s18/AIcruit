@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { mockRecruiterStats, mockRecentActivity, mockCandidates } from '../../data/mockRecruiterData';
 import { useExecutive } from '../../context/ExecutiveContext';
 import { motion } from 'framer-motion';
@@ -24,13 +25,38 @@ const TargetIcon = () => (
 const ExecutiveDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { searchTerm } = useExecutive();
+  const navigate = useNavigate();
+  const [candidates, setCandidates] = useState(mockCandidates);
+  const [activity, setActivity] = useState(mockRecentActivity);
+  const [stats, setStats] = useState(mockRecruiterStats);
+
+  useEffect(() => {
+    const liveApps = JSON.parse(localStorage.getItem('liveApplications') || '[]');
+    if (liveApps.length > 0) {
+      // Map to the dashboard's format standard if necessary
+      const mappedLive = liveApps.map(app => ({
+        ...app,
+        name: app.candidateName || app.name,
+      }));
+      setCandidates([...mappedLive, ...mockCandidates]);
+      setStats(prev => ({ 
+        ...prev, 
+        activeApplicants: prev.activeApplicants + liveApps.length 
+      }));
+    }
+    
+    const freshActivity = JSON.parse(localStorage.getItem('liveActivity') || '[]');
+    if (freshActivity.length > 0) {
+      setActivity([...freshActivity, ...mockRecentActivity]);
+    }
+  }, []);
 
   const handlePostJob = (jobData) => {
     console.log('Posting job from dashboard:', jobData);
     setIsModalOpen(false);
   };
 
-  const filteredCandidates = mockCandidates.filter(c => 
+  const filteredCandidates = candidates.filter(c => 
     c.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     c.role.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -39,7 +65,7 @@ const ExecutiveDashboard = () => {
     .sort((a, b) => b.matchScore - a.matchScore)
     .slice(0, 5);
 
-  const filteredActivity = mockRecentActivity.filter(a => 
+  const filteredActivity = activity.filter(a => 
     a.user.toLowerCase().includes(searchTerm.toLowerCase()) || 
     a.job.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -100,7 +126,7 @@ const ExecutiveDashboard = () => {
         />
         <StatCard 
           title="Total Candidates" 
-          value={mockRecruiterStats.activeApplicants} 
+          value={stats.activeApplicants} 
           icon={<UsersIcon />} 
           trend="up" 
           trendValue={5} 
@@ -188,8 +214,15 @@ const ExecutiveDashboard = () => {
                 transition={{ delay: idx * 0.05 }}
                 className="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/[0.03] border border-transparent hover:border-white/[0.05] transition-all group cursor-pointer"
               >
-                <div className="w-11 h-11 rounded-xl overflow-hidden border border-white/10 bg-slate-800 grayscale group-hover:grayscale-0 transition-all duration-700">
-                  <img src={candidate.avatar} alt={candidate.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <div className="w-11 h-11 rounded-xl overflow-hidden border border-white/10 bg-slate-800 grayscale group-hover:grayscale-0 transition-all duration-700 flex items-center justify-center text-slate-500">
+                  {candidate.avatar ? (
+                    <img src={candidate.avatar} alt={candidate.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  ) : (
+                    <svg viewBox="0 0 24 24" className="w-5 h-5 opacity-30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-[13px] font-black text-white truncate">{candidate.name}</h4>
@@ -209,7 +242,10 @@ const ExecutiveDashboard = () => {
             )}
             
             <div className="pt-4">
-              <button className="w-full py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white border border-white/10 hover:bg-white hover:text-black transition-all duration-500 shadow-lg">
+              <button 
+                className="w-full py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-white border border-white/10 hover:bg-white hover:text-black transition-all duration-500 shadow-lg"
+                onClick={() => navigate('/executive/candidates')}
+              >
                 View All Candidates
               </button>
             </div>

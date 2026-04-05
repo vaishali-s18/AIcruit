@@ -188,12 +188,19 @@ const ExecutiveHeader = () => {
               
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg blur opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
-                <div className="relative w-9 h-9 bg-slate-900 rounded-lg overflow-hidden border border-white/10 shadow-xl">
-                  <img 
-                    src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.id || 'admin'}`} 
-                    alt="Profile" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" 
-                  />
+                <div className="relative w-9 h-9 bg-slate-900 rounded-lg overflow-hidden border border-white/10 shadow-xl flex items-center justify-center text-slate-500">
+                  {user?.avatar ? (
+                    <img 
+                      src={user.avatar} 
+                      alt="Profile" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" 
+                    />
+                  ) : (
+                    <svg viewBox="0 0 24 24" className="w-5 h-5 opacity-40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  )}
                 </div>
               </div>
             </button>

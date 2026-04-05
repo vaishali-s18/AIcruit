@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { jobs } from '../data/jobs';
+import { jobs as backupJobs } from '../data/jobs';
 import { authService } from '../services/auth';
 import './InterviewSchedule.css';
 
@@ -13,6 +15,8 @@ const INTERVIEW_SCRIPT = [
 ];
 
 function InterviewSchedule() {
+  const location = useLocation();
+  const [liveJobs, setLiveJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState('');
   const [isScreening, setIsScreening] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -23,6 +27,37 @@ function InterviewSchedule() {
   const [confidenceScore, setConfidenceScore] = useState(0);
   
   const messagesEndRef = useRef(null);
+
+  // Fetch live jobs to match against incoming handover IDs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const { data } = await axios.get('/api/jobs');
+        setLiveJobs(data);
+      } catch (error) {
+        console.warn('AI Interview API Warning: Falling back to local job archive.');
+        setLiveJobs(backupJobs);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  // Professional Handover Protocol: Detect application context and auto-initialize from state
+  useEffect(() => {
+    const contextJobId = location.state?.jobId;
+    if (contextJobId && liveJobs.length > 0 && !isScreening) {
+      const jobIdStr = String(contextJobId);
+      const targetJob = liveJobs.find(j => String(j.id) === jobIdStr || String(j._id) === jobIdStr);
+      
+      if (targetJob) {
+        setSelectedJob(targetJob.id || targetJob._id);
+        setIsScreening(true);
+        setTimeout(() => {
+          triggerAIResponse(0, targetJob.title);
+        }, 1000);
+      }
+    }
+  }, [location.state, liveJobs, isScreening]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -37,30 +72,38 @@ function InterviewSchedule() {
     if (!selectedJob) return;
     
     setIsScreening(true);
-    const jobData = jobs.find(j => j.id === selectedJob);
+    const jobData = liveJobs.find(j => String(j.id) === String(selectedJob) || String(j._id) === String(selectedJob));
     
     // Initial delay before AI speaks
     setTimeout(() => {
-      triggerAIResponse(0, jobData.title);
+      triggerAIResponse(0, jobData?.title);
     }, 1000);
   };
 
   const triggerAIResponse = (stepIndex, jobTitle = '') => {
+    if (stepIndex >= INTERVIEW_SCRIPT.length) return;
     setIsTyping(true);
     
     // Simulate thinking time
     setTimeout(() => {
+      setIsTyping(false);
       let text = INTERVIEW_SCRIPT[stepIndex];
-      // Note: we fetch job again if jobTitle wasn't provided since state might be stale in timeout closure without proper deps
-      const currentJob = jobs.find(j => j.id === selectedJob);
-      const titleToUse = jobTitle || currentJob?.title || 'the targeted';
+      
+      // If title wasn't passed, try to fetch it from state data
+      const currentJob = liveJobs.find(j => String(j.id) === String(selectedJob) || String(j._id) === String(selectedJob));
+      const titleToUse = jobTitle || currentJob?.title || 'this position';
 
       if (text.includes('{jobTitle}')) {
         text = text.replace('{jobTitle}', titleToUse);
       }
 
-      setMessages(prev => [...prev, { id: Date.now(), type: 'ai', text }]);
-      setIsTyping(false);
+      const nextMsg = {
+        id: `ai-${Date.now()}-${Math.random()}`,
+        type: 'ai',
+        text
+      };
+      
+      setMessages(prev => [...prev, nextMsg]);
       setCurrentStep(stepIndex + 1);
 
       // If it was the final processing message, trigger completion
@@ -74,11 +117,12 @@ function InterviewSchedule() {
     e.preventDefault();
     if (!inputValue.trim() || isTyping || screeningComplete) return;
 
-    setMessages(prev => [...prev, { id: Date.now(), type: 'user', text: inputValue }]);
+    const userMsg = { id: `user-${Date.now()}`, type: 'user', text: inputValue };
+    setMessages(prev => [...prev, userMsg]);
     setInputValue('');
     
     if (currentStep < INTERVIEW_SCRIPT.length) {
-      const jobData = jobs.find(j => j.id === selectedJob);
+      const jobData = liveJobs.find(j => String(j.id) === String(selectedJob) || String(j._id) === String(selectedJob));
       triggerAIResponse(currentStep, jobData?.title);
     }
   };
@@ -91,7 +135,7 @@ function InterviewSchedule() {
     const finalMessages = [
       ...messages,
       { 
-        id: Date.now(), 
+        id: `ai-final-${Date.now()}`, 
         type: 'ai', 
         text: `Interview complete. Your evaluation is finished. Your match score for this position is ${finalScore}%. The hiring team has been notified.` 
       }
@@ -101,11 +145,11 @@ function InterviewSchedule() {
 
     // Save to LocalStorage layer
     const currentUser = authService.getCurrentUser() || { name: 'Guest User', email: 'guest@aicruit.com' };
-    const jobData = jobs.find(j => j.id === selectedJob) || { id: selectedJob, title: 'Unknown Job' };
+    const jobData = liveJobs.find(j => String(j.id) === String(selectedJob) || String(j._id) === String(selectedJob)) || { id: selectedJob, title: 'Unknown Job' };
     
     const applicationRecord = {
       id: `app-${Date.now()}`,
-      jobId: jobData.id,
+      jobId: jobData.id || jobData._id,
       candidateName: currentUser.name,
       candidateEmail: currentUser.email,
       role: currentUser.role || 'Senior Professional',
@@ -125,8 +169,7 @@ function InterviewSchedule() {
     setMessages([]);
     setCurrentStep(0);
     setScreeningComplete(false);
-    setInputValue('');
-    setSelectedJob('');
+    setConfidenceScore(0);
   };
 
   return (
@@ -138,7 +181,7 @@ function InterviewSchedule() {
             className="ai-setup-chamber"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            exit={{ opacity: 0, y: -20 }}
           >
             <div className="chamber-header">
               <div className="pulsing-core"></div>
@@ -155,8 +198,8 @@ function InterviewSchedule() {
                   required
                 >
                   <option value="">-- Select a Job --</option>
-                  {jobs.map(job => (
-                    <option key={job.id} value={job.id}>
+                  {liveJobs.map(job => (
+                    <option key={job.id || job._id} value={job.id || job._id}>
                       {job.title} // {job.company}
                     </option>
                   ))}
@@ -218,21 +261,19 @@ function InterviewSchedule() {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="chat-input-area">
-              <form onSubmit={handleSendMessage} className={`input-form-luxe ${screeningComplete || currentStep === INTERVIEW_SCRIPT.length ? 'disabled' : ''}`}>
-                <input 
-                  type="text" 
+            <div className={`chat-input-area ${screeningComplete ? 'disabled' : ''}`}>
+              <form onSubmit={handleSendMessage} className={`input-form-luxe ${screeningComplete ? 'disabled' : ''}`}>
+                <input
+                  type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder={screeningComplete ? "Interview Finished." : "Type your answer..."}
-                  disabled={isTyping || screeningComplete || currentStep === INTERVIEW_SCRIPT.length}
+                  placeholder={screeningComplete ? "Evaluation finished..." : "Type your technical response..."}
+                  disabled={isTyping || screeningComplete}
                 />
-                <button 
-                  type="submit" 
-                  className="btn-transmit"
-                  disabled={!inputValue.trim() || isTyping || screeningComplete || currentStep === INTERVIEW_SCRIPT.length}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <button type="submit" className="btn-transmit" disabled={!inputValue.trim() || isTyping || screeningComplete}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" />
+                  </svg>
                 </button>
               </form>
             </div>

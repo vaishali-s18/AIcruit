@@ -15,11 +15,20 @@ const CandidateCard = ({ candidate, onStatusChange, onViewProfile }) => {
       <div className="card-body-luxe">
         <div className="card-header-luxe">
           <div className="avatar-wrapper-luxe" onClick={() => onViewProfile(candidate)}>
-            <img 
-              src={candidate.avatar} 
-              alt={candidate.name} 
-              className="avatar-img-luxe"
-            />
+            {candidate.avatar ? (
+              <img 
+                src={candidate.avatar} 
+                alt={candidate.name} 
+                className="avatar-img-luxe"
+              />
+            ) : (
+              <div className="avatar-placeholder-luxe">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+            )}
             {isHighMatch && (
               <span className="top-match-tag">Top Match</span>
             )}

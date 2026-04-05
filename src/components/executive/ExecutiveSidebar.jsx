@@ -149,12 +149,19 @@ const ExecutiveSidebar = () => {
             className="flex items-center gap-3.5 p-3 rounded-2xl hover:bg-white/[0.03] transition-all group border border-transparent hover:border-white/5"
             onClick={() => setIsOpen(false)}
           >
-            <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/10 shrink-0 bg-slate-900 group-hover:border-blue-500/30 transition-all">
-               <img 
-                src={user?.avatar || `https://i.pravatar.cc/150?u=${user?.id || 'admin'}`} 
-                alt="Profile" 
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" 
-              />
+            <div className="relative w-10 h-10 rounded-xl overflow-hidden border border-white/10 shrink-0 bg-slate-900 group-hover:border-blue-500/30 transition-all flex items-center justify-center text-slate-500">
+               {user?.avatar ? (
+                 <img 
+                   src={user.avatar} 
+                   alt="Profile" 
+                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" 
+                 />
+               ) : (
+                <svg viewBox="0 0 24 24" className="w-5 h-5 opacity-40" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+               )}
                <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-slate-900 rounded-full"></div>
             </div>
             <div className="flex-1 min-w-0">

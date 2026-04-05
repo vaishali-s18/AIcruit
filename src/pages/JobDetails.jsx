@@ -86,14 +86,45 @@ function JobDetails() {
     e.preventDefault();
     setIsApplying(true);
     
-    // Simulate application processing
+    // Extract data from the form
+    const nameInput = e.target.elements.applicantName?.value || 'New Candidate';
+    const emailInput = e.target.elements.applicantEmail?.value || 'unknown@email.com';
+
+    // Simulate backend processing
     await new Promise(r => setTimeout(r, 1500));
     
+    // Add to simulated Recruiter Pipeline via localStorage
+    const newApp = {
+      id: `app_${Date.now()}`,
+      jobId: job.id || job._id || 'job-1',
+      candidateName: nameInput,
+      name: nameInput, // Backup for direct access
+      role: job.title,
+      matchScore: 99, // Guaranteed 99% score so they appear at the top of the dashboard
+      status: 'Active Screened',
+      // Removed automatic avatar to wait for user profile update
+    };
+
+    const newActivity = {
+      id: `act_${Date.now()}`,
+      user: nameInput,
+      type: 'Application',
+      job: job.title,
+      time: 'Just now'
+    };
+
+    const existingCandidates = JSON.parse(localStorage.getItem('liveApplications') || '[]');
+    localStorage.setItem('liveApplications', JSON.stringify([newApp, ...existingCandidates]));
+
+    const existingActivity = JSON.parse(localStorage.getItem('liveActivity') || '[]');
+    localStorage.setItem('liveActivity', JSON.stringify([newActivity, ...existingActivity]));
+
     setIsApplying(false);
     setShowApplyModal(false);
     
     // Wire up the pipeline: immediately forward the candidate to the AI Technical Screen
-    navigate('/interview-schedule');
+    // Pass the job ID in state so the screening page can auto-initialize for this role
+    navigate('/interview-schedule', { state: { jobId: job.id || job._id } });
   };
 
   if (loading) return (
@@ -300,11 +331,11 @@ function JobDetails() {
                  <div className="form-fields">
                     <div className="input-field">
                        <label>Full Name</label>
-                       <input type="text" placeholder="e.g. John Doe" required />
+                       <input name="applicantName" type="text" placeholder="e.g. John Doe" required />
                     </div>
                     <div className="input-field">
                        <label>Email Address</label>
-                       <input type="email" placeholder="e.g. john@example.com" required />
+                       <input name="applicantEmail" type="email" placeholder="e.g. john@example.com" required />
                     </div>
                  </div>
                  <div className="input-field">

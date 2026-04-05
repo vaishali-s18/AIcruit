@@ -21,7 +21,7 @@ const ExecutiveSettings = () => {
         name: user.name || '',
         role: user.role || 'Senior Talent Acquisition Lead',
         company: user.company || 'Quantum Tech Industries',
-        avatar: user.avatar || `https://i.pravatar.cc/150?u=${user.id}`,
+        avatar: user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'Recruiter')}&background=0ea5e9&color=fff&bold=true`,
       });
     }
   }, [user]);
@@ -100,8 +100,15 @@ const ExecutiveSettings = () => {
           
           <div className="flex flex-col md:flex-row gap-8">
             <div className="space-y-4">
-              <div className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-white/5 p-1 bg-slate-900">
-                <img src={profile.avatar} alt="Profile" className="w-full h-full object-cover rounded-2xl" />
+              <div className="w-32 h-32 rounded-3xl overflow-hidden border-2 border-white/5 p-1 bg-slate-950 flex items-center justify-center text-slate-700">
+                {profile.avatar ? (
+                  <img src={profile.avatar} alt="Profile" className="w-full h-full object-cover rounded-2xl" />
+                ) : (
+                  <svg viewBox="0 0 24 24" className="w-16 h-16 opacity-20" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                )}
               </div>
               <button className="w-full py-2.5 rounded-xl border border-white/5 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white hover:bg-white/5 transition-all">
                 Change Photo
