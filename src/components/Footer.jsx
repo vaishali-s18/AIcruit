@@ -33,9 +33,8 @@ function Footer() {
         <div className="footer-section">
           <h4>Social Trajectory</h4>
           <div className="social-links">
-            <a href="#" aria-label="LinkedIn"><Icons.LinkedIn /></a>
-            <a href="#" aria-label="Twitter"><Icons.Twitter /></a>
-            <a href="#" aria-label="GitHub"><Icons.GitHub /></a>
+            <a href="https://www.linkedin.com/in/vaishali-v-236501316/" aria-label="LinkedIn"><Icons.LinkedIn /></a>
+            <a href="https://github.com/vaishali-s18" aria-label="GitHub"><Icons.GitHub /></a>
           </div>
         </div>
       </div>

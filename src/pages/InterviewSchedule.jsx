@@ -52,9 +52,12 @@ function InterviewSchedule() {
       if (targetJob) {
         setSelectedJob(targetJob.id || targetJob._id);
         setIsScreening(true);
+        // Instant top-scroll to prevent footer-jump
+        window.scrollTo(0, 0);
+        
         setTimeout(() => {
           triggerAIResponse(0, targetJob.title);
-        }, 1000);
+        }, 1200); // 1.2s delay for smoother transition
       }
     }
   }, [location.state, liveJobs, isScreening]);
