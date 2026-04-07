@@ -2,13 +2,16 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/aicruit', {
-      serverSelectionTimeoutMS: 5000,
-    });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is not defined");
+    }
+
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`MongoDB Connection Error: ${error.message}`);
-    console.warn('Backend server will continue running without MongoDB. Some features may be unavailable.');
+    console.error(`❌ MongoDB Error: ${error.message}`);
+    process.exit(1); // stop app if DB fails (important for production)
   }
 };
 
