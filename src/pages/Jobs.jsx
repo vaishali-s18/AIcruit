@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '../services/api';
+
 import JobCard from '../components/JobCard';
 import JobFilterPills from '../components/JobFilterPills';
 import { jobs as localJobs } from '../data/jobs';
@@ -19,9 +20,14 @@ function Jobs() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const { data } = await axios.get('/api/jobs');
-        setJobs(data);
-        setFilteredJobs(data);
+        const { data } = await api.get('/api/jobs');
+        if (data && data.length > 0) {
+          setJobs(data);
+          setFilteredJobs(data);
+        } else {
+          setJobs(localJobs);
+          setFilteredJobs(localJobs);
+        }
       } catch (error) {
         console.error('Error fetching jobs, falling back to local data:', error);
         setJobs(localJobs);
@@ -30,6 +36,7 @@ function Jobs() {
         setLoading(false);
       }
     };
+
     fetchJobs();
   }, []);
 

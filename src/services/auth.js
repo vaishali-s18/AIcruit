@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from './api';
 
 const STORAGE_KEY = 'aicruit_user';
 const API_URL = '/api/auth';
@@ -7,7 +7,7 @@ export const authService = {
   // Sign up new user
   signup: async (name, email, password, role) => {
     try {
-      const response = await axios.post(`${API_URL}/signup`, { name, email, password, role });
+      const response = await api.post(`${API_URL}/signup`, { name, email, password, role });
       if (response.data.success) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(response.data.user));
       }
@@ -23,7 +23,7 @@ export const authService = {
   // Login user
   login: async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const response = await api.post(`${API_URL}/login`, { email, password });
       if (response.data.success) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(response.data.user));
       }
@@ -52,22 +52,10 @@ export const authService = {
     return !!localStorage.getItem(STORAGE_KEY);
   },
 
-  // Update user profile (Automatically extract skills and experience)
+  // Update user profile
   updateProfile: async (updates) => {
     try {
-      const user = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (!user || !user.token) {
-        return { success: false, message: 'Not authenticated' };
-      }
-
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-
-      const response = await axios.put(`${API_URL}/profile`, updates, config);
+      const response = await api.put(`${API_URL}/profile`, updates);
       
       if (response.data.success) {
         // Update local session data with fresh user info
@@ -85,7 +73,7 @@ export const authService = {
   // Add saved job
   saveJob: async (userId, jobId) => {
     try {
-      const response = await axios.post(`${API_URL}/save-job`, { userId, jobId });
+      const response = await api.post(`${API_URL}/save-job`, { userId, jobId });
       if (response.data.success) {
         // Update local session data
         const user = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -103,7 +91,7 @@ export const authService = {
   // Remove saved job
   unsaveJob: async (userId, jobId) => {
     try {
-      const response = await axios.post(`${API_URL}/unsave-job`, { userId, jobId });
+      const response = await api.post(`${API_URL}/unsave-job`, { userId, jobId });
       if (response.data.success) {
         // Update local session data
         const user = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -123,3 +111,4 @@ export const authService = {
     return { success: false, message: 'Not implemented in backend yet' };
   }
 };
+

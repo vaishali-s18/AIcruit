@@ -13,7 +13,13 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://ai-cruit-lyart.vercel.app'], // Local and Vercel Deployment origin
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
@@ -23,6 +29,8 @@ app.use('/api/jobs', jobRoutes);
 app.get('/', (req, res) => {
   res.send('AIcruit Backend is running...');
 });
+
+
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {

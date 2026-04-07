@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { jobs as backupJobs } from '../data/jobs';
 import { authService } from '../services/auth';
@@ -32,13 +32,18 @@ function InterviewSchedule() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const { data } = await axios.get('/api/jobs');
-        setLiveJobs(data);
+        const { data } = await api.get('/api/jobs');
+        if (data && data.length > 0) {
+          setLiveJobs(data);
+        } else {
+          setLiveJobs(backupJobs);
+        }
       } catch (error) {
         console.warn('AI Interview API Warning: Falling back to local job archive.');
         setLiveJobs(backupJobs);
       }
     };
+
     fetchJobs();
   }, []);
 

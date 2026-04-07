@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
+import api from '../services/api';
 import { jobs as backupJobs } from '../data/jobs';
+import { authService } from '../services/auth';
 import './Recommendations.css';
 
 // Custom SVG Match Ring Component
@@ -56,15 +57,21 @@ function Recommendations() {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const { data } = await axios.get('/api/jobs');
-        setLiveJobs(data);
+        const { data } = await api.get('/api/jobs');
+        if (data && data.length > 0) {
+          setLiveJobs(data);
+        } else {
+          setLiveJobs(backupJobs);
+        }
       } catch (error) {
         console.warn('Recommendations API Warning: Switching to local matching fallback.');
         setLiveJobs(backupJobs);
       }
     };
+
     fetchJobs();
   }, []);
+
 
   useEffect(() => {
     const savedSkills = localStorage.getItem('userSkills');

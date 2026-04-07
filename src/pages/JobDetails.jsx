@@ -2,7 +2,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
+import api from '../services/api';
+
 import { jobs as backupJobs } from '../data/jobs';
 import { parseResumeContent, screenResumeAgainstJob } from '../services/resumeParser';
 import './JobDetails.css';
@@ -29,7 +30,7 @@ function JobDetails() {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const { data } = await axios.get(`/api/jobs/${id}`);
+        const { data } = await api.get(`/api/jobs/${id}`);
         setJob(data);
       } catch (error) {
         console.warn('API Error: Falling back to local data protocol for role ID:', id);
